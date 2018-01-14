@@ -10,5 +10,9 @@ namespace AspNetCoreTodo.Models
     {
         [Required]
         public string Title { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTimeOffset? DueDate { get; set; }
     }
 }

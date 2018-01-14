@@ -24,7 +24,7 @@ namespace AspNetCoreTodo.Services
                 Id = Guid.NewGuid(),
                 IsDone = false,
                 Title = newItem.Title,
-                DueAt = DateTimeOffset.Now.AddDays(3)
+                DueAt = newItem.DueDate.HasValue ? newItem.DueDate : DateTimeOffset.Now.AddDays(3)
             };
 
             _context.Items.Add(entity);
@@ -38,11 +38,25 @@ namespace AspNetCoreTodo.Services
         {
             var items = await _context.Items
                         .Where(x => x.IsDone == false)
+                        .OrderBy(x => x.DueAt)
                         .ToArrayAsync();
 
             return items;
         }
 
-        
+        public async Task<bool> MarkDoneAsync(Guid id)
+        {
+            var item = await _context.Items
+                            .Where(x => x.Id == id)
+                            .SingleOrDefaultAsync();
+
+            if (item == null) return false;
+
+            item.IsDone = true;
+
+            var saveResult = await _context.SaveChangesAsync();
+
+            return saveResult == 1;
+        }
     }
 }
