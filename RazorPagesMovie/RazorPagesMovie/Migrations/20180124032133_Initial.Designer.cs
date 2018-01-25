@@ -11,8 +11,8 @@ using System;
 namespace RazorPagesMovie.Migrations
 {
     [DbContext(typeof(MovieContext))]
-    [Migration("20180123134219_NameChange")]
-    partial class NameChange
+    [Migration("20180124032133_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
