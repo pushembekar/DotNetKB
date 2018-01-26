@@ -23,5 +23,7 @@ namespace RazorPagesMovie.Models
         public string Genre { get; set; }
         // Cost of buying/renting the movie
         public decimal Price { get; set; }
+        // Movie rating
+        public string Rating { get; set; }
     }
 }
