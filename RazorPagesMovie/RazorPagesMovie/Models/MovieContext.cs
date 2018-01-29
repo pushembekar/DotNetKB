@@ -20,5 +20,8 @@ namespace RazorPagesMovie.Models
 
         // Entity to hold the list of Movies
         public DbSet<Movie> Movie { get; set; }
+
+        // Entity to hold the schedule of the movies
+        public DbSet<Schedule> Schedule { get; set; }
     }
 }
