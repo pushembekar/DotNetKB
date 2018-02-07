@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ActionPlan.Models.PlanOfActionModels
 {
@@ -13,8 +8,7 @@ namespace ActionPlan.Models.PlanOfActionModels
     public class RiskLevel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        // ID of the risk level (primary key). Will need to be provided by the initializer or seeder
+        // ID of the risk level (primary key).
         public int ID { get; set; }
 
         [Required]

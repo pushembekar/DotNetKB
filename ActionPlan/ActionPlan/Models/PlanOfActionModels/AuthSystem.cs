@@ -3,21 +3,21 @@
 namespace ActionPlan.Models.PlanOfActionModels
 {
     /// <summary>
-    /// Describes the current status of the POAM
+    /// Information of system that is undergoing security authorization
     /// </summary>
-    public class Status
+    public class AuthSystem
     {
         [Key]
-        // ID of the status (primary key)
+        // ID of the system (primary key)
         public int ID { get; set; }
 
         [Required]
         [MaxLength(20)]
-        // Name of the status: Planned/Pending, Existing Risk Acceptance etc.
+        // Name of the system
         public string Name { get; set; }
 
         [MaxLength(40)]
-        // Description of the status
+        // Description of the system
         public string Description { get; set; }
     }
 }

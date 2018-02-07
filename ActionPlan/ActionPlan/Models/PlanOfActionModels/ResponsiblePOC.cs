@@ -3,21 +3,19 @@
 namespace ActionPlan.Models.PlanOfActionModels
 {
     /// <summary>
-    /// Describes the current status of the POAM
+    /// Describes the POCs responsible for the POAM
     /// </summary>
-    public class Status
+    public class ResponsiblePOC
     {
         [Key]
-        // ID of the status (primary key)
+        // ID of the Responsible POC
         public int ID { get; set; }
 
         [Required]
-        [MaxLength(20)]
-        // Name of the status: Planned/Pending, Existing Risk Acceptance etc.
+        // Name of the POC
         public string Name { get; set; }
 
-        [MaxLength(40)]
-        // Description of the status
+        // Decription of the POC
         public string Description { get; set; }
     }
 }

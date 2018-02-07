@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ActionPlan.Models;
+using ActionPlan.Models.PlanOfActionModels;
 
 namespace ActionPlan.Data
 {
@@ -22,5 +19,10 @@ namespace ActionPlan.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        /// <summary>
+        /// Holds the reference to the POAM model
+        /// </summary>
+        public DbSet<POAM> POAMs { get; set; }
     }
 }
