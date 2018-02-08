@@ -47,7 +47,7 @@ namespace ActionPlan.Entities
         public string Recommendation { get; set; }
 
         // List of POCs responsible for the POAM
-        public IList<ResponsiblePOC> ResponsiblePOCs { get; set; }
+        public virtual ICollection<ResponsiblePOC> ResponsiblePOCs { get; set; }
 
         [Required]
         // Date the POAM was created in the ActionPlan application 

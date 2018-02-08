@@ -33,6 +33,7 @@ namespace ActionPlan
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("ThisConnection"));
+            services.AddDbContext<POAMDbContext>(options => options.UseInMemoryDatabase("ThisConnection"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

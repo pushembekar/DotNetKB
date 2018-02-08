@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ActionPlan.Entities;
+using ActionPlan.Models.PlanOfActionViewModels;
 
 namespace ActionPlan.Services
 {
@@ -17,19 +15,19 @@ namespace ActionPlan.Services
         public MappingProfile()
         {
             // Mapping from AuthSystem model to POAM view model
-            CreateMap<Entities.AuthSystem, Models.PlanOfActionModels.POAM>();
+            CreateMap<AuthSystem, POAMViewModel>();
             // Mapping from DelayReason model to POAM view model
-            CreateMap<Entities.DelayReason, Models.PlanOfActionModels.POAM>();
+            CreateMap<DelayReason, POAMViewModel>();
             // Mapping from ResponsiblePOC model to POAM view model
-            CreateMap<Entities.ResponsiblePOC, Models.PlanOfActionModels.POAM>();
+            CreateMap<ResponsiblePOC, POAMViewModel>();
             // Mapping from RiskLevel model to POAM view model
-            CreateMap<Entities.RiskLevel, Models.PlanOfActionModels.POAM>();
+            CreateMap<RiskLevel, POAMViewModel>();
             // Mapping from Status model to POAM view model
-            CreateMap<Entities.Status, Models.PlanOfActionModels.POAM>();
+            CreateMap<Status, POAMViewModel>();
             // Mapping from Weakness model to POAM view model
-            CreateMap<Entities.Weakness, Models.PlanOfActionModels.POAM>();
+            CreateMap<Weakness, POAMViewModel>();
             // Mapping from POAM model to POAM view model
-            CreateMap<Entities.POAM, Models.PlanOfActionModels.POAM>();
+            CreateMap<POAM, POAMViewModel>();
         }
     }
 }

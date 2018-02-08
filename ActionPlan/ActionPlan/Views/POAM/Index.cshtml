@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ActionPlan.Models.PlanOfActionViewModels.POAMViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AuthSystem)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Number)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CSAMPOAMID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ControlID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RiskLevel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DelayReason)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Weakness)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Recommendation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResponsiblePOCs)
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthSystem)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CSAMPOAMID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ControlID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RiskLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DelayReason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weakness)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recommendation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ResponsiblePOCs)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

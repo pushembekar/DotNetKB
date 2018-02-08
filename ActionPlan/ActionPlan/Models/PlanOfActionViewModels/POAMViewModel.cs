@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ActionPlan.Models.PlanOfActionModels
+namespace ActionPlan.Models.PlanOfActionViewModels
 {
     /// <summary>
     /// The main view model for the application.
     /// </summary>
-    public class POAM
+    public class POAMViewModel
     {
         [Key]
         // Primary key of the collection
@@ -46,7 +46,7 @@ namespace ActionPlan.Models.PlanOfActionModels
         public string Recommendation { get; set; }
 
         // List of POCs responsible for the POAM
-        public IList<string> ResponsiblePOCs { get; set; }
+        public string ResponsiblePOCs { get; set; }
 
     }
 }
