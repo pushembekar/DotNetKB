@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ActionPlan.Data;
 using ActionPlan.Models;
 using ActionPlan.Services;
+using AutoMapper;
 
 namespace ActionPlan
 {
@@ -39,6 +40,7 @@ namespace ActionPlan
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddAutoMapper();
 
             services.AddMvc();
         }

@@ -5,12 +5,23 @@
     <UserSecretsId>aspnet-ActionPlan-5376AF28-6DF5-4A86-A36F-8FACCBECB120</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Models\PlanOfActionModels\AuthSystem.cs" />
+    <Compile Remove="Models\PlanOfActionModels\DelayReason.cs" />
+    <Compile Remove="Models\PlanOfActionModels\ResponsiblePOC.cs" />
+    <Compile Remove="Models\PlanOfActionModels\RiskLevel.cs" />
+    <Compile Remove="Models\PlanOfActionModels\Status.cs" />
+    <Compile Remove="Models\PlanOfActionModels\Weakness.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

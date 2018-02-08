@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ActionPlan.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace ActionPlan.Models.PlanOfActionModels
+namespace ActionPlan.Entities
 {
     /// <summary>
-    /// The main view model for the application.
+    /// The main model for the application. This is where the structure of the POAM table will be defined
     /// </summary>
     public class POAM
     {
@@ -15,7 +16,7 @@ namespace ActionPlan.Models.PlanOfActionModels
 
         [Required]
         // System for which the POAM has been created
-        public string AuthSystem { get; set; }
+        public AuthSystem AuthSystem { get; set; }
 
         // The number provided in the POAM excel file
         public int Number { get; set; }
@@ -29,24 +30,33 @@ namespace ActionPlan.Models.PlanOfActionModels
         public string ControlID { get; set; }
 
         // Risk Level as determined during the security assessment of the application/system
-        public string RiskLevel { get; set; }
+        public RiskLevel RiskLevel { get; set; }
 
         // Current status of the POAM
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         // Delay reason for the POAM (if any)
-        public string DelayReason { get; set; }
+        public DelayReason DelayReason { get; set; }
 
         [Required]
         // Weakness found during the security assessment F&R
-        public string Weakness { get; set; }
+        public Weakness Weakness { get; set; }
 
         [Required]
         // Recommendation made during the security assessment F&R
         public string Recommendation { get; set; }
 
         // List of POCs responsible for the POAM
-        public IList<string> ResponsiblePOCs { get; set; }
+        public IList<ResponsiblePOC> ResponsiblePOCs { get; set; }
 
+        [Required]
+        // Date the POAM was created in the ActionPlan application 
+        // (not to be confused with the POAM creation date from security assessment team)
+        public DateTime CreateDate { get; set; }
+
+        [Required]
+        // User who created the POAM. Since only registered users are going to be allowed
+        // to create the POAM, this property is not of a string type, but of the type = ApplicationUser
+        public ApplicationUser CreatedBy { get; set; }
     }
 }
