@@ -40,7 +40,9 @@ namespace ActionPlan.Controllers
         public async Task<IActionResult> Index()
         {
             // async call to get the list of existing POAMs
-            var poam = await _context.POAMs.ToListAsync();
+            var poam = await _context.POAMs
+                            .Include(item => item.AuthSystem)
+                            .ToListAsync();
             // Mapping the domain model to view model
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poam);
             // return the view for the user

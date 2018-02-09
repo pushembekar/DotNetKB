@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ActionPlan.Entities;
 using ActionPlan.Models.PlanOfActionViewModels;
+using System.Linq;
 
 namespace ActionPlan.Services
 {
@@ -27,7 +28,13 @@ namespace ActionPlan.Services
             // Mapping from Weakness model to POAM view model
             CreateMap<Weakness, POAMViewModel>();
             // Mapping from POAM model to POAM view model
-            CreateMap<POAM, POAMViewModel>();
+            CreateMap<POAM, POAMViewModel>()
+                .ForMember(dest => dest.AuthSystem, opt => opt.MapFrom(src => src.AuthSystem.Name))
+                .ForMember(dest => dest.DelayReason, opt => opt.MapFrom(src => src.DelayReason.Name))
+                .ForMember(dest => dest.ResponsiblePOCs, opt => opt.MapFrom(src => string.Join(",", src.ResponsiblePOCs)))
+                .ForMember(dest => dest.RiskLevel, opt => opt.MapFrom(src => src.RiskLevel.Name))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.Name))
+                .ForMember(dest => dest.Weakness, opt => opt.MapFrom(src => src.Weakness.OriginalRecommendation));
         }
     }
 }

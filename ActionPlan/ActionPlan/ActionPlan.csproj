@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\POAMs\**" />
+    <Content Remove="Views\POAMs\**" />
+    <EmbeddedResource Remove="Views\POAMs\**" />
+    <None Remove="Views\POAMs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Models\PlanOfActionViewModels\AuthSystem.cs" />
     <Compile Remove="Models\PlanOfActionViewModels\DelayReason.cs" />
     <Compile Remove="Models\PlanOfActionViewModels\ResponsiblePOC.cs" />
