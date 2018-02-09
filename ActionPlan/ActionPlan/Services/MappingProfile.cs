@@ -34,7 +34,8 @@ namespace ActionPlan.Services
                 .ForMember(dest => dest.ResponsiblePOCs, opt => opt.MapFrom(src => string.Join(",", src.ResponsiblePOCs)))
                 .ForMember(dest => dest.RiskLevel, opt => opt.MapFrom(src => src.RiskLevel.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.Name))
-                .ForMember(dest => dest.Weakness, opt => opt.MapFrom(src => src.Weakness.OriginalRecommendation));
+                .ForMember(dest => dest.OriginalRecommendation, opt => opt.MapFrom(src => src.Weakness.OriginalRecommendation))
+                .ForMember(dest => dest.Risk, opt => opt.MapFrom(src => src.Weakness.Risk));
         }
     }
 }

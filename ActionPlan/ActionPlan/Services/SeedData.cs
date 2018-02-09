@@ -57,6 +57,46 @@ namespace ActionPlan.Services
                     context.SaveChanges();
                 }
 
+                var delayReasons = new List<DelayReason>();
+                if(!context.DelayReasons.Any())
+                {
+                    delayReasons.Add(new DelayReason { ID = 1, Name = "Weakness/Priority changed" });
+                    delayReasons.Add(new DelayReason { ID = 2, Name = "Original completetion time underestimated" });
+                    delayReasons.Add(new DelayReason { ID = 3, Name = "Funds not allocated/Insufficient funding" });
+                    delayReasons.Add(new DelayReason { ID = 4, Name = "Assigned funds withdrawn" });
+                    delayReasons.Add(new DelayReason { ID = 5, Name = "Dependency on other task(s)" });
+                    delayReasons.Add(new DelayReason { ID = 6, Name = "Contractor delay" });
+                    delayReasons.Add(new DelayReason { ID = 7, Name = "Procurement delay" });
+                    delayReasons.Add(new DelayReason { ID = 8, Name = "Personnel shortage" });
+                    delayReasons.Add(new DelayReason { ID = 9, Name = "Technology delay/dependency" });
+                    delayReasons.Add(new DelayReason { ID = 10, Name = "Policy delay/dependency" });
+                    delayReasons.Add(new DelayReason { ID = 11, Name = "Moratorium on development" });
+                    delayReasons.Add(new DelayReason { ID = 12, Name = "Other" });
+                    delayReasons.Add(new DelayReason { ID = 13, Name = "Not Applicable" });
+                    context.DelayReasons.AddRange(delayReasons);
+                    context.SaveChanges();
+                }
+
+                var weakness = new Weakness();
+                if (!context.Weaknesses.Any())
+                {
+                    weakness.ID = 1;
+                    weakness.OriginalRecommendation = @"REGIS is not currently PIV-enabled.";
+                    weakness.Risk = @"Risk: Lack of PIV implementation leaves the system more 
+                                vulnerable to unauthorized access, making financial data that is transmitted through 
+                                REGIS more vulnerable to unauthorized disclosure and modification.";
+                }
+
+                string recommendation = @"The Assessment Team recommends raising the Risk Level of this POAM from 
+                                            Moderate to High as the scheduled completion date for PIV compliance was September 30, 2015.
+                                            The Assessment Team recommends removing IA-7 from this POAM, as REGIS does not have any 
+                                            cryptographic modules within its authorization boundary.The System Owner and developers 
+                                            have determined that MyAccess is not an option for PIV implementation; the team is 
+                                            researching the use of Integrated Windows Authentication (IWA) for PIV-enabled access.
+                                            This POAM is delayed due to the System Owner working with the developers to determine 
+                                            if IWA is a suitable option to implement PIV authentication; it was determined 
+                                            that MyAccess was not a viable solution.";
+
                 if (!context.POAMs.Any())
                 {
                     var poam = new POAM
@@ -64,12 +104,12 @@ namespace ActionPlan.Services
                         AuthSystem = authSystems.SingleOrDefault(item => item.Name == "REGIS"),
                         CreateDate = DateTime.Now,
                         CSAMPOAMID = "55475",
-                        DelayReason = new DelayReason { Name = "Unknown" },
+                        DelayReason = delayReasons.FirstOrDefault(item => item.Name.StartsWith("Technology", StringComparison.OrdinalIgnoreCase)) ,
                         Number = 1,
-                        Recommendation = @"Lorem Ipsum doler set umet",
+                        Recommendation = recommendation,
                         RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
                         Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),
-                        Weakness = new Weakness { OriginalRecommendation = "Do it" }
+                        Weakness = weakness
                     };
                     context.POAMs.Add(poam);
                     context.SaveChanges();

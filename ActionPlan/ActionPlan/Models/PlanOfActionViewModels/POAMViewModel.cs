@@ -38,8 +38,11 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         public string DelayReason { get; set; }
 
         [Required]
-        // Weakness found during the security assessment F&R
-        public string Weakness { get; set; }
+        // Original recommendation provided during the security assessment F&R
+        public string OriginalRecommendation { get; set; }
+
+        // Detailed risk provided during the security assessment F&R
+        public string Risk { get; set; }
 
         [Required]
         // Recommendation made during the security assessment F&R

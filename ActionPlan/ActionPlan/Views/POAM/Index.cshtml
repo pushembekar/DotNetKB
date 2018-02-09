@@ -12,39 +12,42 @@
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AuthSystem)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Number)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CSAMPOAMID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ControlID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RiskLevel)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DelayReason)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Weakness)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Recommendation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ResponsiblePOCs)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthSystem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CSAMPOAMID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ControlID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiskLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DelayReason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OriginalRecommendation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Risk)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recommendation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ResponsiblePOCs)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -76,7 +79,10 @@
                 @Html.DisplayFor(modelItem => item.DelayReason)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Weakness)
+                @Html.DisplayFor(modelItem => item.OriginalRecommendation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Risk)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Recommendation)

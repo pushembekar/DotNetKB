@@ -42,6 +42,11 @@ namespace ActionPlan.Controllers
             // async call to get the list of existing POAMs
             var poam = await _context.POAMs
                             .Include(item => item.AuthSystem)
+                            .Include(item => item.DelayReason)
+                            .Include(item => item.RiskLevel)
+                            .Include(item => item.Status)
+                            .Include(item => item.Weakness)
+                            .AsNoTracking()
                             .ToListAsync();
             // Mapping the domain model to view model
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poam);
