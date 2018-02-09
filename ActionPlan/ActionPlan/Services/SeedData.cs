@@ -77,17 +77,26 @@ namespace ActionPlan.Services
                     context.SaveChanges();
                 }
 
-                var weakness = new Weakness();
-                if (!context.Weaknesses.Any())
+                var responsiblepocs = new List<ResponsiblePOC>();
+                if (!context.ResponsiblePOCs.Any())
                 {
-                    weakness.ID = 1;
-                    weakness.OriginalRecommendation = @"REGIS is not currently PIV-enabled.";
-                    weakness.Risk = @"Risk: Lack of PIV implementation leaves the system more 
-                                vulnerable to unauthorized access, making financial data that is transmitted through 
-                                REGIS more vulnerable to unauthorized disclosure and modification.";
+                    responsiblepocs.Add(new ResponsiblePOC { ID = 1, Name = "Lai Lee-Birman", Description = "System Owner" });
+                    responsiblepocs.Add(new ResponsiblePOC { ID = 2, Name = "SOC", Description = "Security Office" });
                 }
 
-                string recommendation = @"The Assessment Team recommends raising the Risk Level of this POAM from 
+                if (!context.POAMs.Any())
+                {
+                    var weakness = new Weakness();
+                    if (!context.Weaknesses.Any())
+                    {
+                        weakness.ID = 1;
+                        weakness.OriginalRecommendation = @"REGIS is not currently PIV-enabled.";
+                        weakness.Risk = @"Risk: Lack of PIV implementation leaves the system more 
+                                vulnerable to unauthorized access, making financial data that is transmitted through 
+                                REGIS more vulnerable to unauthorized disclosure and modification.";
+                    }
+
+                    string recommendation = @"The Assessment Team recommends raising the Risk Level of this POAM from 
                                             Moderate to High as the scheduled completion date for PIV compliance was September 30, 2015.
                                             The Assessment Team recommends removing IA-7 from this POAM, as REGIS does not have any 
                                             cryptographic modules within its authorization boundary.The System Owner and developers 
@@ -97,8 +106,6 @@ namespace ActionPlan.Services
                                             if IWA is a suitable option to implement PIV authentication; it was determined 
                                             that MyAccess was not a viable solution.";
 
-                if (!context.POAMs.Any())
-                {
                     var poam = new POAM
                     {
                         AuthSystem = authSystems.SingleOrDefault(item => item.Name == "REGIS"),
@@ -108,6 +115,7 @@ namespace ActionPlan.Services
                         Number = 1,
                         Recommendation = recommendation,
                         RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
+                        ResponsiblePOCs = responsiblepocs.Where(item => item.ID == 1 || item.ID == 2).ToList(),
                         Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),
                         Weakness = weakness
                     };

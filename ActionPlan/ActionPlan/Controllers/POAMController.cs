@@ -46,6 +46,7 @@ namespace ActionPlan.Controllers
                             .Include(item => item.RiskLevel)
                             .Include(item => item.Status)
                             .Include(item => item.Weakness)
+                            .Include(item => item.ResponsiblePOCs)
                             .AsNoTracking()
                             .ToListAsync();
             // Mapping the domain model to view model

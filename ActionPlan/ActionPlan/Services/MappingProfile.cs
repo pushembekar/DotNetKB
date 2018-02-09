@@ -31,7 +31,7 @@ namespace ActionPlan.Services
             CreateMap<POAM, POAMViewModel>()
                 .ForMember(dest => dest.AuthSystem, opt => opt.MapFrom(src => src.AuthSystem.Name))
                 .ForMember(dest => dest.DelayReason, opt => opt.MapFrom(src => src.DelayReason.Name))
-                .ForMember(dest => dest.ResponsiblePOCs, opt => opt.MapFrom(src => string.Join(",", src.ResponsiblePOCs)))
+                .ForMember(dest => dest.ResponsiblePOCs, opt => opt.MapFrom(src => string.Join(", ", src.ResponsiblePOCs.Select(sel => sel.Name))))
                 .ForMember(dest => dest.RiskLevel, opt => opt.MapFrom(src => src.RiskLevel.Name))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status.Name))
                 .ForMember(dest => dest.OriginalRecommendation, opt => opt.MapFrom(src => src.Weakness.OriginalRecommendation))
