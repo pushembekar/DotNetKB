@@ -51,5 +51,23 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // List of POCs responsible for the POAM
         public string ResponsiblePOCs { get; set; }
 
+        // Dollar amount (Resources required)
+        public decimal ResourcesRequired { get; set; }
+
+        // Justification of the cost
+        public string CostJustification { get; set; }
+
+        // Date the POAM is scheduled to be completed
+        public string ScheduledCompletionDate { get; set; }
+
+        // Date the POAM item is planned to start
+        public string PlannedStartDate { get; set; }
+
+        // Date the POAM work actually started
+        public string ActualStartDate { get; set; }
+
+        // Date the POAM item work was completed
+        public string ActualFinishDate { get; set; }
+
     }
 }
