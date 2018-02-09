@@ -109,6 +109,7 @@ namespace ActionPlan.Services
                     var poam = new POAM
                     {
                         AuthSystem = authSystems.SingleOrDefault(item => item.Name == "REGIS"),
+                        ControlID = @"IA-2(1), IA-2(2), IA-2(8), IA-2(12), IA-5(2), IA-5(11), IA-7",
                         CreateDate = DateTime.Now,
                         CSAMPOAMID = "55475",
                         DelayReason = delayReasons.FirstOrDefault(item => item.Name.StartsWith("Technology", StringComparison.OrdinalIgnoreCase)) ,

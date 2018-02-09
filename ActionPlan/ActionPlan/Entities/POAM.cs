@@ -1,6 +1,7 @@
 ﻿using ActionPlan.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ActionPlan.Entities
@@ -48,6 +49,26 @@ namespace ActionPlan.Entities
 
         // List of POCs responsible for the POAM
         public virtual IList<ResponsiblePOC> ResponsiblePOCs { get; set; }
+
+        [DataType(DataType.Currency)]
+        [DefaultValue(100)]
+        // Dollar amount (Resources required)
+        public decimal ResourcesRequired { get; set; }
+
+        // Justification of the cost
+        public string CostJustification { get; set; }
+
+        // Date the POAM is scheduled to be completed
+        public DateTime? ScheduledCompletionDate { get; set; }
+
+        // Date the POAM item is planned to start
+        public DateTime? PlannedStartDate { get; set; }
+
+        // Date the POAM work actually started
+        public DateTime? ActualStartDate { get; set; }
+
+        // Date the POAM item work was completed
+        public DateTime? ActualFinishDate { get; set; }
 
         [Required]
         // Date the POAM was created in the ActionPlan application 
