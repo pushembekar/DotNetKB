@@ -110,13 +110,15 @@ namespace ActionPlan.Services
                     {
                         AuthSystem = authSystems.SingleOrDefault(item => item.Name == "REGIS"),
                         ControlID = @"IA-2(1), IA-2(2), IA-2(8), IA-2(12), IA-5(2), IA-5(11), IA-7",
+                        CostJustification = @"(Minimum Organizational Cost)",
                         CreateDate = DateTime.Now,
                         CSAMPOAMID = "55475",
                         DelayReason = delayReasons.FirstOrDefault(item => item.Name.StartsWith("Technology", StringComparison.OrdinalIgnoreCase)) ,
                         Number = 1,
                         Recommendation = recommendation,
-                        RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
+                        ResourcesRequired = 100.0M,
                         ResponsiblePOCs = responsiblepocs.Where(item => item.ID == 1 || item.ID == 2).ToList(),
+                        RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
                         Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),
                         Weakness = weakness
                     };

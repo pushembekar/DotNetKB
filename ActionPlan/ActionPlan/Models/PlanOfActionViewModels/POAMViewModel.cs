@@ -51,6 +51,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // List of POCs responsible for the POAM
         public string ResponsiblePOCs { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
         // Dollar amount (Resources required)
         public decimal ResourcesRequired { get; set; }
 
