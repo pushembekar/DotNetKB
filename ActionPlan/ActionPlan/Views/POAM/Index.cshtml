@@ -12,9 +12,13 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
+            @if (ViewContext.HttpContext.User.IsInRole("Administrator"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+
+            }
             <th>
                 @Html.DisplayNameFor(model => model.AuthSystem)
             </th>
@@ -73,71 +77,77 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthSystem)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Number)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CSAMPOAMID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ControlID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RiskLevel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DelayReason)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OriginalRecommendation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Risk)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Recommendation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResponsiblePOCs)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ResourcesRequired)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostJustification)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ScheduledCompletionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlannedStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PlannedFinishDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActualStartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ActualFinishDate)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (ViewContext.HttpContext.User.IsInRole("Administrator"))
+                {
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthSystem)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CSAMPOAMID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ControlID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiskLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DelayReason)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OriginalRecommendation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Risk)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Recommendation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResponsiblePOCs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ResourcesRequired)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CostJustification)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ScheduledCompletionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlannedStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PlannedFinishDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualStartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualFinishDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
