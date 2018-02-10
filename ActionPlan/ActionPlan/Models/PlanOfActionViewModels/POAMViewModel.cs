@@ -58,17 +58,25 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Justification of the cost
         public string CostJustification { get; set; }
 
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MMM yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "TBD")]
         // Date the POAM is scheduled to be completed
-        public string ScheduledCompletionDate { get; set; }
+        public DateTime? ScheduledCompletionDate { get; set; }
 
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MMM yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "TBD")]
         // Date the POAM item is planned to start
-        public string PlannedStartDate { get; set; }
+        public DateTime? PlannedStartDate { get; set; }
 
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MMM yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "TBD")]
+        // Date the POAM item is planned to finish
+        public DateTime? PlannedFinishDate { get; set; }
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MMM yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "TBD")]
         // Date the POAM work actually started
-        public string ActualStartDate { get; set; }
+        public DateTime? ActualStartDate { get; set; }
 
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MMM yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "TBD")]
         // Date the POAM item work was completed
-        public string ActualFinishDate { get; set; }
+        public DateTime? ActualFinishDate { get; set; }
 
     }
 }

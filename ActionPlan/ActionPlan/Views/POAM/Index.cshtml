@@ -54,6 +54,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.CostJustification)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduledCompletionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlannedStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlannedFinishDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualFinishDate)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -101,6 +116,21 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CostJustification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduledCompletionDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlannedStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlannedFinishDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualFinishDate)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

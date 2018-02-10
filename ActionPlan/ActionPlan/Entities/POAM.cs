@@ -64,6 +64,9 @@ namespace ActionPlan.Entities
         // Date the POAM item is planned to start
         public DateTime? PlannedStartDate { get; set; }
 
+        // Date the POAM item is planned to finish
+        public DateTime? PlannedFinishDate { get; set; }
+
         // Date the POAM work actually started
         public DateTime? ActualStartDate { get; set; }
 
