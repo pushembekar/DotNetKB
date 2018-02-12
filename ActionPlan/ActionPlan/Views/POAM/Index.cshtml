@@ -43,9 +43,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.OriginalRecommendation)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Risk)
-            </th>
+            </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Recommendation)
             </th>
@@ -110,11 +110,16 @@
                     @Html.DisplayFor(modelItem => item.DelayReason)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OriginalRecommendation)
+                    <div>
+                        @Html.DisplayFor(modelItem => item.OriginalRecommendation)
+                    </div>
+                    <div>
+                        @Html.DisplayFor(modelItem => item.Risk)
+                    </div>
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.Risk)
-                </td>
+                </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Recommendation)
                 </td>
