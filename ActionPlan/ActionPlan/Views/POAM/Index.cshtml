@@ -5,6 +5,24 @@
 }
 
 <h2>Index</h2>
+<div class="panel panel-default row">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-xs-2 panel-body">
+            <strong>@Html.DisplayNameFor(model => model.RiskLevel):</strong> @Html.DisplayFor(modelItem => item.RiskLevel)
+        </div>
+        <div class="col-xs-5 panel-body">
+            <strong>@Html.DisplayNameFor(model => model.DelayReason):</strong> @Html.DisplayFor(modelItem => item.DelayReason)
+        </div>
+        <div class="col-xs-5 panel-body">
+            <p><h6><strong>@Html.DisplayNameFor(model => model.Number):</strong> @Html.DisplayFor(modelItem => item.Number)</h6></p>
+            <p><h6><strong>@Html.DisplayNameFor(model => model.CSAMPOAMID):</strong> @Html.DisplayFor(modelItem => item.CSAMPOAMID)</h6></p>
+            <p><h6><strong>@Html.DisplayNameFor(model => model.ControlID):</strong> @Html.DisplayFor(modelItem => item.ControlID)</h6></p>
+        </div>
+    }
+
+</div>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -44,8 +62,8 @@
                 @Html.DisplayNameFor(model => model.OriginalRecommendation)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.Risk)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.Risk)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Recommendation)
             </th>
@@ -118,8 +136,8 @@
                     </div>
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.Risk)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.Risk)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Recommendation)
                 </td>
