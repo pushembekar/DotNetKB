@@ -9,11 +9,12 @@
 
 @foreach (var item in Model)
 {
-    <div class="panel panel-default row">
+    <div class="panel panel-default container-fluid well">
         @*Row 1*@
         <div class="col-xs-2 panel-body">
             <p><strong>@Html.DisplayNameFor(model => model.AuthSystem):</strong> @Html.DisplayFor(modelItem => item.AuthSystem)</p>
-            <p><strong>@Html.DisplayNameFor(model => model.RiskLevel):</strong> @Html.DisplayFor(modelItem => item.RiskLevel)</p>
+            <p><strong>@Html.DisplayNameFor(model => model.RiskLevel):</strong> 
+                <span class="@(item.RiskLevel == "High" || item.RiskLevel == "Very High" ? "text-danger" : null)">@Html.DisplayFor(modelItem => item.RiskLevel)</span></p>
         </div>
         <div class="col-xs-4 col-xs-offset-2 panel-body">
             <p><strong>@Html.DisplayNameFor(model => model.Status):</strong> @Html.DisplayFor(modelItem => item.Status)</p>
