@@ -6,66 +6,10 @@
 
 <h2>Index</h2>
 
-
-@foreach (var item in Model)
-{
-    <div class="panel panel-default container-fluid well">
-        @*Row 1*@
-        <div class="col-xs-2 panel-body">
-            <p><strong>@Html.DisplayNameFor(model => model.AuthSystem):</strong> @Html.DisplayFor(modelItem => item.AuthSystem)</p>
-            <p><strong>@Html.DisplayNameFor(model => model.RiskLevel):</strong> 
-                <span class="@(item.RiskLevel == "High" || item.RiskLevel == "Very High" ? "text-danger" : null)">@Html.DisplayFor(modelItem => item.RiskLevel)</span></p>
-        </div>
-        <div class="col-xs-4 col-xs-offset-2 panel-body">
-            <p><strong>@Html.DisplayNameFor(model => model.Status):</strong> @Html.DisplayFor(modelItem => item.Status)</p>
-            <p><strong>@Html.DisplayNameFor(model => model.DelayReason):</strong> @Html.DisplayFor(modelItem => item.DelayReason)</p>
-        </div>
-        <div class="col-xs-3  col-xs-offset-1 panel-body">
-            <p><h6><strong>@Html.DisplayNameFor(model => model.Number):</strong> @Html.DisplayFor(modelItem => item.Number)</h6></p>
-            <p><h6><strong>@Html.DisplayNameFor(model => model.CSAMPOAMID):</strong> @Html.DisplayFor(modelItem => item.CSAMPOAMID)</h6></p>
-            <p><h6><strong>@Html.DisplayNameFor(model => model.ControlID):</strong> @Html.DisplayFor(modelItem => item.ControlID)</h6></p>
-        </div>
-
-        @*Row 2*@
-        <div class="col-xs-4 panel-body">
-            <strong>@Html.DisplayNameFor(model => model.ResponsiblePOCs):</strong> @Html.DisplayFor(modelItem => item.ResponsiblePOCs)
-        </div>
-        <div class="col-xs-4 panel-body">
-            <p><strong>@Html.DisplayNameFor(model => model.ResourcesRequired):</strong> @Html.DisplayFor(modelItem => item.ResourcesRequired)</p>
-            <p><strong>@Html.DisplayNameFor(model => model.CostJustification):</strong> @Html.DisplayFor(modelItem => item.CostJustification)</p>
-        </div>
-        <div class="col-xs-3 col-xs-offset-1 panel-body">
-            <p><h6><strong>@Html.DisplayNameFor(model => model.ScheduledCompletionDate):</strong> @Html.DisplayFor(modelItem => item.ScheduledCompletionDate)</h6></p>
-            <p><h6><strong>@Html.DisplayNameFor(model => model.PlannedStartDate):</strong> @Html.DisplayFor(modelItem => item.PlannedStartDate)</h6></p>
-            <p><h6><strong>@Html.DisplayNameFor(model => model.PlannedFinishDate):</strong> @Html.DisplayFor(modelItem => item.PlannedFinishDate)</h6></p>
-            <p><h6><strong>@Html.DisplayNameFor(model => model.ActualStartDate):</strong> @Html.DisplayFor(modelItem => item.ActualStartDate)</h6></p>
-            <p><h6><strong>@Html.DisplayNameFor(model => model.ActualFinishDate):</strong> @Html.DisplayFor(modelItem => item.ActualFinishDate)</h6></p>
-        </div>
-
-        @*Row 3*@
-        <div class="col-xs-6 panel-body">
-            <p><strong>@Html.DisplayNameFor(model => model.OriginalRecommendation):</strong></p>
-            <p>@Html.DisplayFor(modelItem => item.OriginalRecommendation)</p>
-        </div>
-        <div class="col-xs-6 panel-body">
-            <p><strong>@Html.DisplayNameFor(model => model.Risk):</strong></p>
-            <p>@Html.DisplayFor(modelItem => item.Risk)</p>
-        </div>
-
-        @*Row 4*@
-        <div class="col-xs-12 panel-body">
-            <p><strong>@Html.DisplayNameFor(model => model.Recommendation):</strong></p>
-            <p>@Html.DisplayFor(modelItem => item.Recommendation)</p>
-        </div>
-    </div>
-}
-
-
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table small">
     <thead>
         <tr>
             @if (ViewContext.HttpContext.User.IsInRole("Administrator"))
@@ -203,7 +147,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ActualFinishDate)
                 </td>
-                <td>
+                <td class="text-nowrap">
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                     @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
