@@ -1,5 +1,6 @@
 ﻿using ActionPlan.Entities;
 using Microsoft.EntityFrameworkCore;
+using ActionPlan.Models.PlanOfActionViewModels;
 
 namespace ActionPlan.Data
 {
@@ -29,6 +30,7 @@ namespace ActionPlan.Data
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Weakness> Weaknesses { get; set; }
         public DbSet<POAM> POAMs { get; set; }
+        public DbSet<ActionPlan.Models.PlanOfActionViewModels.POAMViewModel> POAMViewModel { get; set; }
         
     }
 }

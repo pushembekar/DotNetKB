@@ -36,7 +36,7 @@ namespace ActionPlan.Controllers
         /// Default "Get" method
         /// Returns the list of POAMs in human readable format
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of POAMViewModels representing the POAMs in the system</returns>
         public async Task<IActionResult> Index()
         {
             // async call to get the list of existing POAMs
@@ -53,6 +53,34 @@ namespace ActionPlan.Controllers
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poam);
             // return the view for the user
             return View(viewmodel);
+        }
+
+
+        public async Task<IActionResult> Details(string poamID)
+        {
+            // form the query to get existing poams
+            var poam = _context.POAMs
+                    .Include(item => item.AuthSystem)
+                            .Include(item => item.DelayReason)
+                            .Include(item => item.RiskLevel)
+                            .Include(item => item.Status)
+                            .Include(item => item.Weakness)
+                            .Include(item => item.ResponsiblePOCs)
+                            .AsNoTracking();
+                            
+            // check if there is any parameter corresponding to a guid
+            if (!String.IsNullOrEmpty(poamID))
+            {
+                // try parsing the string to a Guid
+                if (Guid.TryParse(poamID, out Guid poamGuid))
+                    poam = poam.Where(item => item.ID == poamGuid);
+            }
+            // execute the query
+            var poamlist = await poam.ToListAsync();
+            // Mapping the domain model to view model
+            var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poamlist);
+            // return the view for the user
+            return View(viewmodel[0]);
         }
     }
 }
