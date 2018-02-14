@@ -80,7 +80,7 @@ namespace ActionPlan.Controllers
             // Mapping the domain model to view model
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poamlist);
             // return the view for the user
-            return View(viewmodel[0]);
+            return View(viewmodel);
         }
     }
 }
