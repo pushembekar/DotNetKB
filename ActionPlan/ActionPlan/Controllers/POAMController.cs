@@ -58,10 +58,10 @@ namespace ActionPlan.Controllers
         /// <summary>
         /// "Get" method for the Details view
         /// Tries to find the detailed information for one particular POAM
-        /// If not, displays details for the entier poam list
+        /// If not, displays details for the entier POAM list
         /// </summary>
-        /// <param name="poamID"></param>
-        /// <returns>Displays the details of either one particular poam or the entire poam list</returns>
+        /// <param name="poamID">either a guid or some identifier to pinpoint a POAM</param>
+        /// <returns>Displays the details of either one particular poam or the entire POAM list</returns>
         public async Task<IActionResult> Details(string poamID)
         {
             // form the query to get existing poams
