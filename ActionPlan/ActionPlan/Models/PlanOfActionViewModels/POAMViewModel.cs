@@ -58,6 +58,9 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Recommendation made during the security assessment F&R
         public string Recommendation { get; set; }
 
+        // Flag to store whether the recommendation is trunctated on the view or not
+        public bool IsRecommendationTruncated { get; set; }
+
         [Display(Name ="Responsible POCs")]
         // List of POCs responsible for the POAM
         public string ResponsiblePOCs { get; set; }

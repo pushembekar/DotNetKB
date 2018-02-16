@@ -121,7 +121,7 @@
                         @Html.DisplayFor(modelItem => item.Risk)
                     </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.Recommendation)
+                    @Html.DisplayFor(modelItem => item.Recommendation) @Html.ActionLink("more", "Details", new { item.ID })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ResponsiblePOCs)

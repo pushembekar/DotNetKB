@@ -22,9 +22,6 @@ namespace ActionPlan.Controllers
         // private variable holding the automapper context
         private readonly IMapper _mapper;
 
-        [BindProperty]
-        public bool IsRecommendationTruncated { get; private set; }
-
         /// <summary>
         /// Contructor expecting DBContext and Automapper config as dependencies
         /// </summary>
@@ -58,7 +55,8 @@ namespace ActionPlan.Controllers
             // Truncate the longer strings
             foreach (var item in viewmodel)
             {
-                item.Recommendation = TruncateLongField(item.Recommendation);
+                item.Recommendation = TruncateLongField(item.Recommendation, out bool flag);
+                item.IsRecommendationTruncated = flag;
             }
             // return the view for the user
             return View(viewmodel);
@@ -104,12 +102,12 @@ namespace ActionPlan.Controllers
         /// </summary>
         /// <param name="recommendation"></param>
         /// <returns>Truncated string</returns>
-        private string TruncateLongField(string recommendation)
+        private string TruncateLongField(string recommendation, out bool flag)
         {
             // Call the truncate extension method
             var strTruncated = recommendation.Truncate(100);
             // Set the flag to true if the string was actually truncated
-            IsRecommendationTruncated = strTruncated.Length < recommendation.Length;
+            flag = strTruncated.Length < recommendation.Length;
             // return the truncated string
             return strTruncated;
         }
