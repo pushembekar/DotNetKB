@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ActionPlan.Data;
 using ActionPlan.Entities;
+using ActionPlan.Extensions;
 using ActionPlan.Models.PlanOfActionViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,9 @@ namespace ActionPlan.Controllers
         private readonly POAMDbContext _context;
         // private variable holding the automapper context
         private readonly IMapper _mapper;
+
+        [BindProperty]
+        public bool IsRecommendationTruncated { get; private set; }
 
         /// <summary>
         /// Contructor expecting DBContext and Automapper config as dependencies
@@ -51,10 +55,16 @@ namespace ActionPlan.Controllers
                             .ToListAsync();
             // Mapping the domain model to view model
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poam);
+            // Truncate the longer strings
+            foreach (var item in viewmodel)
+            {
+                item.Recommendation = TruncateLongField(item.Recommendation);
+            }
             // return the view for the user
             return View(viewmodel);
         }
 
+        
         /// <summary>
         /// "Get" method for the Details view
         /// Tries to find the detailed information for one particular POAM
@@ -88,5 +98,21 @@ namespace ActionPlan.Controllers
             // return the view for the user
             return View(viewmodel);
         }
+
+        /// <summary>
+        /// Truncates the string to manageable length
+        /// </summary>
+        /// <param name="recommendation"></param>
+        /// <returns>Truncated string</returns>
+        private string TruncateLongField(string recommendation)
+        {
+            // Call the truncate extension method
+            var strTruncated = recommendation.Truncate(100);
+            // Set the flag to true if the string was actually truncated
+            IsRecommendationTruncated = strTruncated.Length < recommendation.Length;
+            // return the truncated string
+            return strTruncated;
+        }
+
     }
 }
