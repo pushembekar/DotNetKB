@@ -112,16 +112,28 @@
                 <td>
                     <div>
                         @Html.DisplayFor(modelItem => item.OriginalRecommendation)
+                        @if (item.IsOriginalRecommendationTruncated)
+                        {
+                            @Html.ActionLink("more", "Details", new { item.ID })
+                        }
                     </div>
                     <div>
                         @Html.DisplayFor(modelItem => item.Risk)
+                        @if (item.IsRiskTruncated)
+                        {
+                            @Html.ActionLink("more", "Details", new { item.ID })
+                        }
                     </div>
                 </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Risk)
                     </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.Recommendation) @Html.ActionLink("more", "Details", new { item.ID })
+                    @Html.DisplayFor(modelItem => item.Recommendation)
+                    @if (item.IsRecommendationTruncated)
+                    {
+                        @Html.ActionLink("more", "Details", new { item.ID })
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ResponsiblePOCs)

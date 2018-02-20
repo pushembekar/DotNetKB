@@ -32,6 +32,9 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // or a reference number from a third party entity
         public string ControlID { get; set; }
 
+        // Flag to store whether the control id is trunctated on the view or not
+        public bool IsControlIDTruncated { get; set; }
+
         [Display(Name = "Risk Level")]
         // Risk Level as determined during the security assessment of the application/system
         public string RiskLevel { get; set; }
@@ -49,9 +52,15 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Original recommendation provided during the security assessment F&R
         public string OriginalRecommendation { get; set; }
 
+        // Flag to store whether the original recommendation is trunctated on the view or not
+        public bool IsOriginalRecommendationTruncated { get; set; }
+
         [Display(Name = "Risk")]
         // Detailed risk provided during the security assessment F&R
         public string Risk { get; set; }
+
+        // Flag to store whether the risk is trunctated on the view or not
+        public bool IsRiskTruncated { get; set; }
 
         [Required]
         [Display(Name ="Recommendation")]

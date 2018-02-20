@@ -55,8 +55,14 @@ namespace ActionPlan.Controllers
             // Truncate the longer strings
             foreach (var item in viewmodel)
             {
-                item.Recommendation = TruncateLongField(item.Recommendation, out bool flag);
-                item.IsRecommendationTruncated = flag;
+                item.ControlID = TruncateLongField(item.ControlID, 10, out bool controlflag);
+                item.IsControlIDTruncated = controlflag;
+                item.Risk = TruncateLongField(item.Risk, 50, out bool riskflag);
+                item.IsRiskTruncated = riskflag;
+                item.OriginalRecommendation = TruncateLongField(item.OriginalRecommendation, 20, out bool origrecoflag);
+                item.IsOriginalRecommendationTruncated = origrecoflag;
+                item.Recommendation = TruncateLongField(item.Recommendation, 100, out bool recoflag);
+                item.IsRecommendationTruncated = recoflag;
             }
             // return the view for the user
             return View(viewmodel);
@@ -102,10 +108,10 @@ namespace ActionPlan.Controllers
         /// </summary>
         /// <param name="recommendation"></param>
         /// <returns>Truncated string</returns>
-        private string TruncateLongField(string recommendation, out bool flag)
+        private string TruncateLongField(string recommendation, int words, out bool flag)
         {
             // Call the truncate extension method
-            var strTruncated = recommendation.Truncate(100);
+            var strTruncated = recommendation.Truncate(words);
             // Set the flag to true if the string was actually truncated
             flag = strTruncated.Length < recommendation.Length;
             // return the truncated string
