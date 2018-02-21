@@ -49,15 +49,7 @@ namespace ActionPlan.Controllers
             int @medium = _configuration.GetValue<int>("Exerpts:Medium", 50);
             int @long = _configuration.GetValue<int>("Exerpts:Long", 100);
             // async call to get the list of existing POAMs
-            var poam = await _context.POAMs
-                            .Include(item => item.AuthSystem)
-                            .Include(item => item.DelayReason)
-                            .Include(item => item.RiskLevel)
-                            .Include(item => item.Status)
-                            .Include(item => item.Weakness)
-                            .Include(item => item.ResponsiblePOCs)
-                            .AsNoTracking()
-                            .ToListAsync();
+            var poam = await GetPOAMList().AsNoTracking().ToListAsync();
             // Mapping the domain model to view model
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poam);
             // Truncate the longer strings
@@ -87,15 +79,7 @@ namespace ActionPlan.Controllers
         public async Task<IActionResult> Details(string poamID)
         {
             // form the query to get existing poams
-            var poam = _context.POAMs
-                    .Include(item => item.AuthSystem)
-                            .Include(item => item.DelayReason)
-                            .Include(item => item.RiskLevel)
-                            .Include(item => item.Status)
-                            .Include(item => item.Weakness)
-                            .Include(item => item.ResponsiblePOCs)
-                            .AsNoTracking();
-                            
+            var poam = GetPOAMList().AsNoTracking();
             // check if there is any parameter corresponding to a guid
             if (!String.IsNullOrEmpty(poamID))
             {
@@ -114,17 +98,30 @@ namespace ActionPlan.Controllers
         /// <summary>
         /// Truncates the string to manageable length
         /// </summary>
-        /// <param name="recommendation"></param>
+        /// <param name="excerpt">The original long sentence</param>
+        /// <param name="words">number of words to truncate the sentence to</param>
+        /// <param name="flag">'out' param depicting if the sentence was truncated or not</param>
         /// <returns>Truncated string</returns>
-        private string TruncateLongField(string recommendation, int words, out bool flag)
+        private string TruncateLongField(string excerpt, int words, out bool flag)
         {
             // Call the truncate extension method
-            var strTruncated = recommendation.Truncate(words);
+            var strTruncated = excerpt.Truncate(words);
             // Set the flag to true if the string was actually truncated
-            flag = strTruncated.Length < recommendation.Length;
+            flag = strTruncated.Length < excerpt.Length;
             // return the truncated string
             return strTruncated;
         }
 
+        /// <summary>
+        /// Returns the query to list all the poams in the system
+        /// </summary>
+        /// <returns>IQueryable expression of the query</returns>
+        private IQueryable<POAM> GetPOAMList() => _context.POAMs
+                    .Include(item => item.AuthSystem)
+                    .Include(item => item.DelayReason)
+                    .Include(item => item.RiskLevel)
+                    .Include(item => item.Status)
+                    .Include(item => item.Weakness)
+                    .Include(item => item.ResponsiblePOCs);
     }
 }
