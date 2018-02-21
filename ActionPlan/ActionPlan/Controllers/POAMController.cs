@@ -9,6 +9,7 @@ using ActionPlan.Models.PlanOfActionViewModels;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace ActionPlan.Controllers
 {
@@ -21,16 +22,19 @@ namespace ActionPlan.Controllers
         private readonly POAMDbContext _context;
         // private variable holding the automapper context
         private readonly IMapper _mapper;
+        // private variable holding the configuration context
+        private readonly IConfiguration _configuration;
 
         /// <summary>
         /// Contructor expecting DBContext and Automapper config as dependencies
         /// </summary>
         /// <param name="context">POAMDbContext which holds the POAM list</param>
         /// <param name="mapper">Automapper config reference</param>
-        public POAMController(POAMDbContext context, IMapper mapper)
+        public POAMController(POAMDbContext context, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -40,6 +44,10 @@ namespace ActionPlan.Controllers
         /// <returns>List of POAMViewModels representing the POAMs in the system</returns>
         public async Task<IActionResult> Index()
         {
+            // read the configuration values... provide default value in case there's an exception
+            int @short = _configuration.GetValue<int>("Exerpts:Short", 20);
+            int @medium = _configuration.GetValue<int>("Exerpts:Medium", 50);
+            int @long = _configuration.GetValue<int>("Exerpts:Long", 100);
             // async call to get the list of existing POAMs
             var poam = await _context.POAMs
                             .Include(item => item.AuthSystem)
@@ -55,13 +63,13 @@ namespace ActionPlan.Controllers
             // Truncate the longer strings
             foreach (var item in viewmodel)
             {
-                item.ControlID = TruncateLongField(item.ControlID, 10, out bool controlflag);
+                item.ControlID = TruncateLongField(item.ControlID, @short, out bool controlflag);
                 item.IsControlIDTruncated = controlflag;
-                item.Risk = TruncateLongField(item.Risk, 50, out bool riskflag);
+                item.Risk = TruncateLongField(item.Risk, @medium, out bool riskflag);
                 item.IsRiskTruncated = riskflag;
-                item.OriginalRecommendation = TruncateLongField(item.OriginalRecommendation, 20, out bool origrecoflag);
+                item.OriginalRecommendation = TruncateLongField(item.OriginalRecommendation, @short, out bool origrecoflag);
                 item.IsOriginalRecommendationTruncated = origrecoflag;
-                item.Recommendation = TruncateLongField(item.Recommendation, 100, out bool recoflag);
+                item.Recommendation = TruncateLongField(item.Recommendation, @long, out bool recoflag);
                 item.IsRecommendationTruncated = recoflag;
             }
             // return the view for the user
