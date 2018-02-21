@@ -83,7 +83,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Justification of the cost
         public string CostJustification { get; set; }
 
-        [Display(Name ="Scheduled Completion Date")]
+        [Display(Name ="Scheduled Completion")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:MMM yyyy}", ApplyFormatInEditMode = true, NullDisplayText = "TBD")]
         // Date the POAM is scheduled to be completed
         public DateTime? ScheduledCompletionDate { get; set; }
