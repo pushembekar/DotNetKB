@@ -9,6 +9,28 @@ namespace ActionPlan.Services
     /// </summary>
     public interface ILookUpDataService
     {
-        IEnumerable<AuthSystem> GetAllAuthSystems();
+        /// <summary>
+        /// Return all the systems for which POAMs can be created/edited
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<AuthSystem> GetAuthSystems();
+
+        /// <summary>
+        /// Returns all the Risk levels for which POAMs can be created/edited
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<RiskLevel> GetRiskLevels();
+
+        /// <summary>
+        /// Returns all the statuses for which POAMs can be created/edited
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Status> GetStatuses();
+
+        /// <summary>
+        /// Returns all the delay reasons for which POAMs can be created/edited
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<DelayReason> GetDelayReasons();
     }
 }
