@@ -41,6 +41,7 @@ namespace ActionPlan
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<ILookUpDataService, LookUpDataService>();
             services.AddAutoMapper();
 
             services.AddMvc();

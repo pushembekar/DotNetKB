@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ActionPlan.Models.PlanOfActionViewModels
 {
@@ -31,6 +32,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // or a reference number from a third party entity
         public string ControlID { get; set; }
 
+        [NotMapped]
         // Flag to store whether the control id is trunctated on the view or not
         public bool IsControlIDTruncated { get; set; }
 
@@ -51,6 +53,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Original recommendation provided during the security assessment F&R
         public string OriginalRecommendation { get; set; }
 
+        [NotMapped]
         // Flag to store whether the original recommendation is trunctated on the view or not
         public bool IsOriginalRecommendationTruncated { get; set; }
 
@@ -58,6 +61,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Detailed risk provided during the security assessment F&R
         public string Risk { get; set; }
 
+        [NotMapped]
         // Flag to store whether the risk is trunctated on the view or not
         public bool IsRiskTruncated { get; set; }
 
@@ -66,6 +70,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Recommendation made during the security assessment F&R
         public string Recommendation { get; set; }
 
+        [NotMapped]
         // Flag to store whether the recommendation is trunctated on the view or not
         public bool IsRecommendationTruncated { get; set; }
 

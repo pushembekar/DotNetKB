@@ -1,0 +1,118 @@
+﻿@model ActionPlan.Models.PlanOfActionViewModels.POAMViewModel
+@inject ActionPlan.Services.ILookUpDataService LookUpDataService
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>POAMViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AuthSystem" class="control-label"></label>
+                <select asp-for="AuthSystem" class="form-control" asp-items="@(new SelectList(LookUpDataService.GetAllAuthSystems(), "ID", "Name"))">
+                    <option></option>
+                </select>
+                <span asp-validation-for="AuthSystem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CSAMPOAMID" class="control-label"></label>
+                <input asp-for="CSAMPOAMID" class="form-control" />
+                <span asp-validation-for="CSAMPOAMID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ControlID" class="control-label"></label>
+                <input asp-for="ControlID" class="form-control" />
+                <span asp-validation-for="ControlID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RiskLevel" class="control-label"></label>
+                <input asp-for="RiskLevel" class="form-control" />
+                <span asp-validation-for="RiskLevel" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DelayReason" class="control-label"></label>
+                <input asp-for="DelayReason" class="form-control" />
+                <span asp-validation-for="DelayReason" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OriginalRecommendation" class="control-label"></label>
+                <input asp-for="OriginalRecommendation" class="form-control" />
+                <span asp-validation-for="OriginalRecommendation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Risk" class="control-label"></label>
+                <input asp-for="Risk" class="form-control" />
+                <span asp-validation-for="Risk" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recommendation" class="control-label"></label>
+                <input asp-for="Recommendation" class="form-control" />
+                <span asp-validation-for="Recommendation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResponsiblePOCs" class="control-label"></label>
+                <input asp-for="ResponsiblePOCs" class="form-control" />
+                <span asp-validation-for="ResponsiblePOCs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResourcesRequired" class="control-label"></label>
+                <input asp-for="ResourcesRequired" class="form-control" />
+                <span asp-validation-for="ResourcesRequired" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CostJustification" class="control-label"></label>
+                <input asp-for="CostJustification" class="form-control" />
+                <span asp-validation-for="CostJustification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScheduledCompletionDate" class="control-label"></label>
+                <input asp-for="ScheduledCompletionDate" class="form-control" />
+                <span asp-validation-for="ScheduledCompletionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlannedStartDate" class="control-label"></label>
+                <input asp-for="PlannedStartDate" class="form-control" />
+                <span asp-validation-for="PlannedStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlannedFinishDate" class="control-label"></label>
+                <input asp-for="PlannedFinishDate" class="form-control" />
+                <span asp-validation-for="PlannedFinishDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActualStartDate" class="control-label"></label>
+                <input asp-for="ActualStartDate" class="form-control" />
+                <span asp-validation-for="ActualStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ActualFinishDate" class="control-label"></label>
+                <input asp-for="ActualFinishDate" class="form-control" />
+                <span asp-validation-for="ActualFinishDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

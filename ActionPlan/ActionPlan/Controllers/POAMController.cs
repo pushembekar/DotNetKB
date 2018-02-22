@@ -96,6 +96,15 @@ namespace ActionPlan.Controllers
         }
 
         /// <summary>
+        /// Provides the 'Get' view for new POAM creation
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// Truncates the string to manageable length
         /// </summary>
         /// <param name="excerpt">The original long sentence</param>
