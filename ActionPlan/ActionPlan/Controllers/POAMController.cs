@@ -105,6 +105,17 @@ namespace ActionPlan.Controllers
         }
 
         /// <summary>
+        /// Provides the 'Post' view for new POAM creation
+        /// </summary>
+        /// <param name="poam"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Create(POAMViewModel poam)
+        {
+            return RedirectToAction("Index");
+        }
+
+        /// <summary>
         /// Truncates the string to manageable length
         /// </summary>
         /// <param name="excerpt">The original long sentence</param>
