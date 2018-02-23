@@ -49,7 +49,7 @@ namespace ActionPlan.Controllers
             int @medium = _configuration.GetValue<int>("Exerpts:Medium", 50);
             int @long = _configuration.GetValue<int>("Exerpts:Long", 100);
             // async call to get the list of existing POAMs
-            var poam = await GetPOAMList().AsNoTracking().ToListAsync();
+            var poam = await GetPOAMList().AsNoTracking().OrderBy(item => item.Number).ToListAsync();
             // Mapping the domain model to view model
             var viewmodel = _mapper.Map<List<POAM>, List<POAMViewModel>>(poam);
             // Truncate the longer strings
