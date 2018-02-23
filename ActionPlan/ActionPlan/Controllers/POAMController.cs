@@ -74,17 +74,17 @@ namespace ActionPlan.Controllers
         /// Tries to find the detailed information for one particular POAM
         /// If not, displays details for the entier POAM list
         /// </summary>
-        /// <param name="poamID">either a guid or some identifier to pinpoint a POAM</param>
+        /// <param name="ID">either a guid or some identifier to pinpoint a POAM</param>
         /// <returns>Displays the details of either one particular poam or the entire POAM list</returns>
-        public async Task<IActionResult> Details(string poamID)
+        public async Task<IActionResult> Details(string ID)
         {
             // form the query to get existing poams
             var poam = GetPOAMList().AsNoTracking();
             // check if there is any parameter corresponding to a guid
-            if (!String.IsNullOrEmpty(poamID))
+            if (!String.IsNullOrEmpty(ID))
             {
                 // try parsing the string to a Guid
-                if (Guid.TryParse(poamID, out Guid poamGuid))
+                if (Guid.TryParse(ID, out Guid poamGuid))
                     poam = poam.Where(item => item.ID == poamGuid);
             }
             // execute the query

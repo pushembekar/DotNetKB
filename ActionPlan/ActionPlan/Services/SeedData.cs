@@ -32,7 +32,7 @@ namespace ActionPlan.Services
                 }
 
                 var riskLevels = new List<RiskLevel>();
-                if(!context.RiskLevels.Any())
+                if (!context.RiskLevels.Any())
                 {
                     riskLevels.Add(new RiskLevel { ID = 1, Name = "VL", Description = "Very Low" });
                     riskLevels.Add(new RiskLevel { ID = 2, Name = "L", Description = "Low" });
@@ -44,7 +44,7 @@ namespace ActionPlan.Services
                 }
 
                 var statuses = new List<Status>();
-                if(!context.Statuses.Any())
+                if (!context.Statuses.Any())
                 {
                     statuses.Add(new Status { ID = 1, Name = "Planned/Pending" });
                     statuses.Add(new Status { ID = 2, Name = "Canceled" });
@@ -58,7 +58,7 @@ namespace ActionPlan.Services
                 }
 
                 var delayReasons = new List<DelayReason>();
-                if(!context.DelayReasons.Any())
+                if (!context.DelayReasons.Any())
                 {
                     delayReasons.Add(new DelayReason { ID = 1, Name = "Weakness/Priority changed" });
                     delayReasons.Add(new DelayReason { ID = 2, Name = "Original completetion time underestimated" });
@@ -82,6 +82,7 @@ namespace ActionPlan.Services
                 {
                     responsiblepocs.Add(new ResponsiblePOC { ID = 1, Name = "Lai Lee-Birman", Description = "System Owner" });
                     responsiblepocs.Add(new ResponsiblePOC { ID = 2, Name = "SOC", Description = "Security Office" });
+                    responsiblepocs.Add(new ResponsiblePOC { ID = 3, Name = "Jeremy Holmes", Description = "Information Steward" });
                 }
 
                 if (!context.POAMs.Any())
@@ -109,19 +110,59 @@ namespace ActionPlan.Services
                     var poam = new POAM
                     {
                         ActualFinishDate = null,
-                        ActualStartDate = new DateTime(2016, 9, 1),
+                        ActualStartDate = null,
                         AuthSystem = authSystems.SingleOrDefault(item => item.Name == "REGIS"),
                         ControlID = @"IA-2(1), IA-2(2), IA-2(8), IA-2(12), IA-5(2), IA-5(11), IA-7",
                         CostJustification = @"Minimum Organizational Cost",
                         CreateDate = DateTime.Now,
                         CSAMPOAMID = "55475",
-                        DelayReason = delayReasons.FirstOrDefault(item => item.Name.StartsWith("Technology", StringComparison.OrdinalIgnoreCase)) ,
+                        DelayReason = delayReasons.FirstOrDefault(item => item.Name.StartsWith("Technology", StringComparison.OrdinalIgnoreCase)),
                         Number = 1,
                         PlannedFinishDate = new DateTime(2018, 5, 1),
                         PlannedStartDate = new DateTime(2017, 5, 1),
                         Recommendation = recommendation,
                         ResourcesRequired = 100.0M,
                         ResponsiblePOCs = responsiblepocs.Where(item => item.ID == 1 || item.ID == 2).ToList(),
+                        RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
+                        ScheduledCompletionDate = new DateTime(2016, 9, 1),
+                        Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),
+                        Weakness = weakness
+                    };
+                    context.POAMs.Add(poam);
+
+                    weakness = new Weakness();
+                    if (!context.Weaknesses.Any())
+                    {
+                        weakness.ID = 2;
+                        weakness.OriginalRecommendation = @"RA-2: During the assessment, REGIS information system data types were not validated by the Information Steward.
+                                                            PL-2:  The System Characterization was unable to be properly updated with the most accurate system data types. ";
+                        weakness.Risk = @"Risk: The risk of not properly categorizing the system makes it difficult to understand the scope of REGIS 
+                                            and what the effect might be on the overall security posture of the system which may lead to improper security settings and management.  ";
+                    }
+
+                    recommendation = @"The Assessment Team recommends that the REGIS Information Steward provide additional information on the types of data that are stored 
+                                        and transmitted by the system, in order to correctly verify the Security Categorization. Data types should be mapped to Information 
+                                        Types in accordance with SP 800-60, Volume II, to verify the accuracy of the current FIPS 199 and overall FIPS 200 level of Moderate.
+                                        The System Characterization should be reviewed and updated as necessary to document all changes that have been made to the system.
+                                        This POAM is delayed because the REGIS Information Steward did not verify that the list of data types listed in the SCD are comprehensive, 
+                                        to include all data types that REGIS stores, transmits and processes. ";
+
+                    poam = new POAM
+                    {
+                        ActualFinishDate = null,
+                        ActualStartDate = new DateTime(2016, 9, 1),
+                        AuthSystem = authSystems.SingleOrDefault(item => item.Name == "REGIS"),
+                        ControlID = @"PL-2, RA-2",
+                        CostJustification = @"Minimum Organizational Cost",
+                        CreateDate = DateTime.Now,
+                        CSAMPOAMID = "60028",
+                        DelayReason = delayReasons.FirstOrDefault(item => item.Name.StartsWith("Other", StringComparison.OrdinalIgnoreCase)),
+                        Number = 2,
+                        PlannedFinishDate = new DateTime(2018, 5, 1),
+                        PlannedStartDate = new DateTime(2017, 5, 1),
+                        Recommendation = recommendation,
+                        ResourcesRequired = 100.0M,
+                        ResponsiblePOCs = responsiblepocs.Where(item => item.ID == 3).ToList(),
                         RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
                         ScheduledCompletionDate = new DateTime(2016, 9, 1),
                         Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),
