@@ -18,7 +18,7 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // System for which the POAM has been created
         public string AuthSystem { get; set; }
 
-        [Display(Name = "Excel Line #")]
+        [Display(Name = "Line #")]
         // The number provided in the POAM excel file
         public int Number { get; set; }
 
