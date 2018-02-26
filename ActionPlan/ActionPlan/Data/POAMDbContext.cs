@@ -30,7 +30,7 @@ namespace ActionPlan.Data
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Weakness> Weaknesses { get; set; }
         public DbSet<POAM> POAMs { get; set; }
-        public DbSet<ActionPlan.Models.PlanOfActionViewModels.POAMViewModel> POAMViewModel { get; set; }
+        public DbSet<POAMViewModel> POAMViewModel { get; set; }
         
     }
 }

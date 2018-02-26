@@ -116,9 +116,18 @@ namespace ActionPlan.Controllers
         /// <param name="poam">The bound poam view model</param>
         /// <returns>Redirect to the index page</returns>
         [HttpPost]
-        public IActionResult Create(POAMViewModel poam)
+        public async Task<IActionResult> Create(POAMViewModel poam)
         {
-            var entity = _entityservice.CreatePOAMFromViewModel(poam);
+            try
+            {
+                var entity = await _entityservice.CreatePOAMFromViewModel(poam);
+                _context.POAMs.Add(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             return RedirectToAction("Index");
         }
 
@@ -134,7 +143,7 @@ namespace ActionPlan.Controllers
             // Call the truncate extension method
             var strTruncated = excerpt.Truncate(words);
             // Set the flag to true if the string was actually truncated
-            flag = strTruncated.Length < excerpt.Length;
+            flag = !string.IsNullOrEmpty(strTruncated) && !string.IsNullOrEmpty(excerpt) && strTruncated.Length < excerpt.Length;
             // return the truncated string
             return strTruncated;
         }

@@ -1,5 +1,6 @@
 ﻿using ActionPlan.Entities;
 using ActionPlan.Models.PlanOfActionViewModels;
+using System.Threading.Tasks;
 
 namespace ActionPlan.Services
 {
@@ -13,6 +14,6 @@ namespace ActionPlan.Services
         /// </summary>
         /// <param name="viewmodel">POAMViewModel object</param>
         /// <returns>POAM object</returns>
-        POAM CreatePOAMFromViewModel(POAMViewModel viewmodel);
+        Task<POAM> CreatePOAMFromViewModel(POAMViewModel viewmodel);
     }
 }

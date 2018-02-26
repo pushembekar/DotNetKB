@@ -39,11 +39,9 @@ namespace ActionPlan.Entities
         // Delay reason for the POAM (if any)
         public DelayReason DelayReason { get; set; }
 
-        [Required]
         // Weakness found during the security assessment F&R
         public Weakness Weakness { get; set; }
 
-        [Required]
         // Recommendation made during the security assessment F&R
         public string Recommendation { get; set; }
 
@@ -73,12 +71,10 @@ namespace ActionPlan.Entities
         // Date the POAM item work was completed
         public DateTime? ActualFinishDate { get; set; }
 
-        [Required]
         // Date the POAM was created in the ActionPlan application 
         // (not to be confused with the POAM creation date from security assessment team)
         public DateTime CreateDate { get; set; }
 
-        [Required]
         // User who created the POAM. Since only registered users are going to be allowed
         // to create the POAM, this property is not of a string type, but of the type = ApplicationUser
         public ApplicationUser CreatedBy { get; set; }

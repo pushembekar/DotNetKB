@@ -49,7 +49,6 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Delay reason for the POAM (if any)
         public string DelayReason { get; set; }
 
-        [Required]
         [Display(Name = "Original Recommendation")]
         // Original recommendation provided during the security assessment F&R
         public string OriginalRecommendation { get; set; }
@@ -66,7 +65,6 @@ namespace ActionPlan.Models.PlanOfActionViewModels
         // Flag to store whether the risk is trunctated on the view or not
         public bool IsRiskTruncated { get; set; }
 
-        [Required]
         [Display(Name ="Recommendation")]
         // Recommendation made during the security assessment F&R
         public string Recommendation { get; set; }
