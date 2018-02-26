@@ -10,6 +10,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ActionPlan.Services;
 
 namespace ActionPlan.Controllers
 {
@@ -24,17 +25,22 @@ namespace ActionPlan.Controllers
         private readonly IMapper _mapper;
         // private variable holding the configuration context
         private readonly IConfiguration _configuration;
+        // private variable holding the entity service context
+        private readonly IEntityService _entityservice;
 
         /// <summary>
         /// Contructor expecting DBContext and Automapper config as dependencies
         /// </summary>
         /// <param name="context">POAMDbContext which holds the POAM list</param>
         /// <param name="mapper">Automapper config reference</param>
-        public POAMController(POAMDbContext context, IMapper mapper, IConfiguration configuration)
+        /// <param name="configuration">Configuration setttings for the application</param>
+        /// <param name="entityservice">Service to deal with application entities</param>
+        public POAMController(POAMDbContext context, IMapper mapper, IConfiguration configuration, IEntityService entityservice)
         {
             _context = context;
             _mapper = mapper;
             _configuration = configuration;
+            _entityservice = entityservice;
         }
 
         /// <summary>
@@ -107,11 +113,12 @@ namespace ActionPlan.Controllers
         /// <summary>
         /// Provides the 'Post' view for new POAM creation
         /// </summary>
-        /// <param name="poam"></param>
-        /// <returns></returns>
+        /// <param name="poam">The bound poam view model</param>
+        /// <returns>Redirect to the index page</returns>
         [HttpPost]
         public IActionResult Create(POAMViewModel poam)
         {
+            var entity = _entityservice.CreatePOAMFromViewModel(poam);
             return RedirectToAction("Index");
         }
 
