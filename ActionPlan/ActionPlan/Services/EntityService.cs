@@ -165,7 +165,7 @@ namespace ActionPlan.Services
             else
             {
                 // Try to see if the object can be found via the "Name" property
-                var strDelayReason = await _context.Statuses.Where(item => item.Name == idorname).FirstOrDefaultAsync();
+                var strDelayReason = await _context.DelayReasons.Where(item => item.Name == idorname).FirstOrDefaultAsync();
                 // if the object cannot be found; throw an exception; otherwise send the object back
                 return strDelayReason ?? throw new Exception("Delay Reason not found");
             }
