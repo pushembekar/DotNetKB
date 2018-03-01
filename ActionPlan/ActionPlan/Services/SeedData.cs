@@ -80,9 +80,9 @@ namespace ActionPlan.Services
                 var responsiblepocs = new List<ResponsiblePOC>();
                 if (!context.ResponsiblePOCs.Any())
                 {
-                    responsiblepocs.Add(new ResponsiblePOC { ID = 1, Name = "Lai Lee-Birman", Description = "System Owner" });
-                    responsiblepocs.Add(new ResponsiblePOC { ID = 2, Name = "SOC", Description = "Security Office" });
-                    responsiblepocs.Add(new ResponsiblePOC { ID = 3, Name = "Jeremy Holmes", Description = "Information Steward" });
+                    responsiblepocs.Add(new ResponsiblePOC { ID = new Guid(), Name = "Lai Lee-Birman", Description = "System Owner" });
+                    responsiblepocs.Add(new ResponsiblePOC { ID = new Guid(), Name = "SOC", Description = "Security Office" });
+                    responsiblepocs.Add(new ResponsiblePOC { ID = new Guid(), Name = "Jeremy Holmes", Description = "Information Steward" });
                 }
 
                 if (!context.POAMs.Any())
@@ -122,7 +122,7 @@ namespace ActionPlan.Services
                         PlannedStartDate = new DateTime(2017, 5, 1),
                         Recommendation = recommendation,
                         ResourcesRequired = 100.0M,
-                        ResponsiblePOCs = responsiblepocs.Where(item => item.ID == 1 || item.ID == 2).ToList(),
+                        ResponsiblePOCs = responsiblepocs.Where(item => item.Name == "Lai Lee-Birman" || item.Name == "SOC").ToList(),
                         RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
                         ScheduledCompletionDate = new DateTime(2016, 9, 1),
                         Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),
@@ -162,7 +162,7 @@ namespace ActionPlan.Services
                         PlannedStartDate = new DateTime(2017, 5, 1),
                         Recommendation = recommendation,
                         ResourcesRequired = 100.0M,
-                        ResponsiblePOCs = responsiblepocs.Where(item => item.ID == 3).ToList(),
+                        ResponsiblePOCs = responsiblepocs.Where(item => item.Name.Contains("Jeremy")).ToList(),
                         RiskLevel = riskLevels.SingleOrDefault(item => item.Name == "H"),
                         ScheduledCompletionDate = new DateTime(2016, 9, 1),
                         Status = statuses.SingleOrDefault(item => item.Name == "Delayed"),

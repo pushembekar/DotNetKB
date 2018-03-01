@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ActionPlan.Data;
@@ -41,6 +42,7 @@ namespace ActionPlan.Services
                 var status = await CreateStatus(viewmodel.Status);
                 var delayreason = await CreateDelayReason(viewmodel.DelayReason);
                 var weakness = await CrateWeakness(viewmodel.OriginalRecommendation, viewmodel.Risk);
+                var pocs = await CreateResponsiblePOCs(viewmodel.ResponsiblePOCs);
                 // assign the authsystem to POAM
                 poam.AuthSystem = authsystem;
                 poam.Number = viewmodel.Number;
@@ -54,6 +56,9 @@ namespace ActionPlan.Services
                 poam.DelayReason = delayreason;
                 // assign the weakness of the POAM
                 poam.Weakness = weakness;
+                poam.Recommendation = viewmodel.Recommendation;
+                // assign the pocs to the POAM
+                poam.ResponsiblePOCs = pocs;
 
                 return poam;
             }
@@ -65,6 +70,7 @@ namespace ActionPlan.Services
             
         }
 
+        
         /// <summary>
         /// Returns the AuthSystem object based on the criteria provided
         /// </summary>
@@ -200,6 +206,40 @@ namespace ActionPlan.Services
             }
             return weakness ?? throw new Exception(@"Weakness not found and/or could not be created");
         }
+
+        private async Task<List<ResponsiblePOC>> CreateResponsiblePOCs(string names, string description = null)
+        {
+            // split the names on commas
+            var lstNames = names.Split(",", StringSplitOptions.RemoveEmptyEntries).ToList();
+            var pocs = new List<ResponsiblePOC>();
+            // loop through the names to find if the POC exists
+            foreach (var name in lstNames)
+            {
+                ResponsiblePOC poc = null;
+                // find if the poc exists
+                poc = await _context.ResponsiblePOCs.Where(item => item.Name == name).FirstOrDefaultAsync();
+                // if the POC does not exist, create a new one
+                if (poc == null)
+                {
+                    poc = new ResponsiblePOC
+                    {
+                        Name = name,
+                        Description = description
+                    };
+                    // Add the object to the database
+                    _context.ResponsiblePOCs.Add(poc);
+                    // Save the object. This will get the ID field populated as well
+                    await _context.SaveChangesAsync();
+                }
+                // Add the poc to the list
+                pocs.Add(poc);
+            }
+            // check if the object being passed has any items in it. Throw exception otherwise
+            if (pocs.Count() == 0) throw new Exception("No POCs found or created");
+
+            return pocs;
+        }
+
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ActionPlan.Entities
 {
@@ -9,7 +10,7 @@ namespace ActionPlan.Entities
     {
         [Key]
         // ID of the Responsible POC
-        public int ID { get; set; }
+        public Guid ID { get; set; }
 
         [Required]
         // Name of the POC
