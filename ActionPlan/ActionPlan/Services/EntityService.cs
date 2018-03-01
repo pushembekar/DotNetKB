@@ -40,6 +40,7 @@ namespace ActionPlan.Services
                 var risklevel = await CreateRiskLevel(viewmodel.RiskLevel);
                 var status = await CreateStatus(viewmodel.Status);
                 var delayreason = await CreateDelayReason(viewmodel.DelayReason);
+                var weakness = await CrateWeakness(viewmodel.OriginalRecommendation, viewmodel.Risk);
                 // assign the authsystem to POAM
                 poam.AuthSystem = authsystem;
                 poam.Number = viewmodel.Number;
@@ -51,6 +52,8 @@ namespace ActionPlan.Services
                 poam.Status = status;
                 // assign the delay reason to POAM
                 poam.DelayReason = delayreason;
+                // assign the weakness of the POAM
+                poam.Weakness = weakness;
 
                 return poam;
             }
@@ -61,7 +64,7 @@ namespace ActionPlan.Services
             }
             
         }
-        
+
         /// <summary>
         /// Returns the AuthSystem object based on the criteria provided
         /// </summary>
@@ -169,6 +172,33 @@ namespace ActionPlan.Services
                 // if the object cannot be found; throw an exception; otherwise send the object back
                 return strDelayReason ?? throw new Exception("Delay Reason not found");
             }
+        }
+
+        /// <summary>
+        /// Finds or adds new weakness for the POAM
+        /// </summary>
+        /// <param name="originalRecommendation">Original Recommendation of the POAM</param>
+        /// <param name="risk">The Risk of the POAM</param>
+        /// <returns>The weakness object</returns>
+        private async Task<Weakness> CrateWeakness(string originalRecommendation, string risk)
+        {
+            Weakness weakness = null;
+            //Find if the weakness exists
+            weakness = await _context.Weaknesses.Where(item => item.OriginalRecommendation == originalRecommendation && item.Risk == risk).FirstOrDefaultAsync();
+            // if the weakness does not exist, create a new weakness
+            if (weakness == null)
+            {
+                weakness = new Weakness
+                {
+                    Risk = risk,
+                    OriginalRecommendation = originalRecommendation
+                };
+                // Add the object to the database
+                _context.Weaknesses.Add(weakness);
+                // Save the object. This will get the ID field populated as well
+                await _context.SaveChangesAsync();
+            }
+            return weakness ?? throw new Exception(@"Weakness not found and/or could not be created");
         }
 
     }

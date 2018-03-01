@@ -90,7 +90,7 @@ namespace ActionPlan.Services
                     var weakness = new Weakness();
                     if (!context.Weaknesses.Any())
                     {
-                        weakness.ID = 1;
+                        //weakness.ID = 1;
                         weakness.OriginalRecommendation = @"REGIS is not currently PIV-enabled.";
                         weakness.Risk = @"Risk: Lack of PIV implementation leaves the system more 
                                 vulnerable to unauthorized access, making financial data that is transmitted through 
@@ -133,7 +133,7 @@ namespace ActionPlan.Services
                     weakness = new Weakness();
                     if (!context.Weaknesses.Any())
                     {
-                        weakness.ID = 2;
+                        //weakness.ID = 2;
                         weakness.OriginalRecommendation = @"RA-2: During the assessment, REGIS information system data types were not validated by the Information Steward.
                                                             PL-2:  The System Characterization was unable to be properly updated with the most accurate system data types. ";
                         weakness.Risk = @"Risk: The risk of not properly categorizing the system makes it difficult to understand the scope of REGIS 
