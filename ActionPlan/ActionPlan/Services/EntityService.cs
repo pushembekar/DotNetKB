@@ -37,28 +37,36 @@ namespace ActionPlan.Services
             {
                 var poam = new POAM();
                 // Create the AuthSystem object
-                var authsystem = await CrateAuthSystem(viewmodel.AuthSystem);
-                var risklevel = await CreateRiskLevel(viewmodel.RiskLevel);
-                var status = await CreateStatus(viewmodel.Status);
-                var delayreason = await CreateDelayReason(viewmodel.DelayReason);
-                var weakness = await CrateWeakness(viewmodel.OriginalRecommendation, viewmodel.Risk);
-                var pocs = await CreateResponsiblePOCs(viewmodel.ResponsiblePOCs);
-                // assign the authsystem to POAM
-                poam.AuthSystem = authsystem;
+                var authsystem = CrateAuthSystem(viewmodel.AuthSystem);
+                var risklevel = CreateRiskLevel(viewmodel.RiskLevel);
+                var status = CreateStatus(viewmodel.Status);
+                var delayreason = CreateDelayReason(viewmodel.DelayReason);
+                var weakness = CrateWeakness(viewmodel.OriginalRecommendation, viewmodel.Risk);
+                var pocs = CreateResponsiblePOCs(viewmodel.ResponsiblePOCs);
+                // assign some fields synchronously
                 poam.Number = viewmodel.Number;
                 poam.CSAMPOAMID = viewmodel.CSAMPOAMID;
                 poam.ControlID = viewmodel.ControlID;
-                // assign the risklevel to POAM
-                poam.RiskLevel = risklevel;
-                // assign the status to POAM
-                poam.Status = status;
-                // assign the delay reason to POAM
-                poam.DelayReason = delayreason;
-                // assign the weakness of the POAM
-                poam.Weakness = weakness;
                 poam.Recommendation = viewmodel.Recommendation;
+                poam.ResourcesRequired = viewmodel.ResourcesRequired;
+                poam.CostJustification = viewmodel.CostJustification;
+                poam.ScheduledCompletionDate = viewmodel.ScheduledCompletionDate;
+                poam.PlannedStartDate = viewmodel.PlannedStartDate;
+                poam.PlannedFinishDate = viewmodel.PlannedFinishDate;
+                poam.ActualStartDate = viewmodel.ActualStartDate;
+                poam.ActualFinishDate = viewmodel.ActualFinishDate;
+                // assign the authsystem to POAM
+                poam.AuthSystem = await authsystem;
+                // assign the risklevel to POAM
+                poam.RiskLevel = await risklevel;
+                // assign the status to POAM
+                poam.Status = await status;
+                // assign the delay reason to POAM
+                poam.DelayReason = await delayreason;
+                // assign the weakness of the POAM
+                poam.Weakness = await weakness;
                 // assign the pocs to the POAM
-                poam.ResponsiblePOCs = pocs;
+                poam.ResponsiblePOCs = await pocs;
 
                 return poam;
             }
