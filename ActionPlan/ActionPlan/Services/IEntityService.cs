@@ -15,5 +15,7 @@ namespace ActionPlan.Services
         /// <param name="viewmodel">POAMViewModel object</param>
         /// <returns>POAM object</returns>
         Task<POAM> CreatePOAMFromViewModel(POAMViewModel viewmodel);
+
+        bool IsExcelFileReadable(string filename);
     }
 }

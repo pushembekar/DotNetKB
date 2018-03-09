@@ -12,6 +12,7 @@ using ActionPlan.Data;
 using ActionPlan.Models;
 using ActionPlan.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 
 namespace ActionPlan
 {
@@ -44,6 +45,7 @@ namespace ActionPlan
             services.AddAutoMapper();
             services.AddScoped<ILookUpDataService, LookUpDataService>();
             services.AddScoped<IEntityService, EntityService>();
+            services.AddScoped<IExcelService, ExcelService>();
 
             services.AddMvc();
         }

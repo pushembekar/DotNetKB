@@ -16,14 +16,17 @@ namespace ActionPlan.Services
     {
         // private variable to hold the db context
         private readonly POAMDbContext _context;
+        // private variable to hold the excel service
+        private readonly IExcelService _excelService;
 
         /// <summary>
         /// Service constructor. Takes the POAMDbContext as dependency
         /// </summary>
         /// <param name="context"></param>
-        public EntityService(POAMDbContext context)
+        public EntityService(POAMDbContext context, IExcelService excelService)
         {
             _context = context;
+            _excelService = excelService;
         }
 
         /// <summary>
@@ -78,7 +81,21 @@ namespace ActionPlan.Services
             
         }
 
-        
+        public bool IsExcelFileReadable(string filename)
+        {
+            try
+            {
+                _excelService.CreateViewModelFromExcel(filename);
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
         /// <summary>
         /// Returns the AuthSystem object based on the criteria provided
         /// </summary>
@@ -248,6 +265,6 @@ namespace ActionPlan.Services
             return pocs;
         }
 
-
+        
     }
 }

@@ -50,6 +50,8 @@ namespace ActionPlan.Controllers
         /// <returns>List of POAMViewModels representing the POAMs in the system</returns>
         public async Task<IActionResult> Index()
         {
+            // take this line out after testing
+            //_entityservice.IsExcelFileReadable(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
             // read the configuration values... provide default value in case there's an exception
             int @short = _configuration.GetValue<int>("Exerpts:Short", 20);
             int @medium = _configuration.GetValue<int>("Exerpts:Medium", 50);
