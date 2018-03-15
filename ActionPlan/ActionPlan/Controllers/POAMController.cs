@@ -52,6 +52,12 @@ namespace ActionPlan.Controllers
         {
             // take this line out after testing
             //_entityservice.IsExcelFileReadable(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
+            var poams = _entityservice.ReadPOAMsFromExcel(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
+            foreach (var item in await poams)
+            {
+                _context.POAMs.Add(item);
+                await _context.SaveChangesAsync();
+            }
             // read the configuration values... provide default value in case there's an exception
             int @short = _configuration.GetValue<int>("Exerpts:Short", 20);
             int @medium = _configuration.GetValue<int>("Exerpts:Medium", 50);

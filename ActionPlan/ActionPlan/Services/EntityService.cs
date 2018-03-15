@@ -81,12 +81,36 @@ namespace ActionPlan.Services
             
         }
 
-        public bool IsExcelFileReadable(string filename)
+        public async Task<bool> IsExcelFileReadable(string filename)
         {
             try
             {
-                _excelService.CreateViewModelFromExcel(filename);
+                var viewmodels = _excelService.CreateViewModelFromExcel(filename);
+                foreach (var item in await viewmodels)
+                {
+                    var poam = await CreatePOAMFromViewModel(item);
+                }
                 return true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async Task<List<POAM>> ReadPOAMsFromExcel(string filename)
+        {
+            try
+            {
+                var poams = new List<POAM>();
+                var viewmodels = _excelService.CreateViewModelFromExcel(filename);
+                foreach (var item in await viewmodels)
+                {
+                    var poam = await CreatePOAMFromViewModel(item);
+                    poams.Add(poam);
+                }
+                return poams;
             }
             catch (Exception ex)
             {

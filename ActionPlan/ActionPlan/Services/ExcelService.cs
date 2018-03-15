@@ -22,7 +22,7 @@ namespace ActionPlan.Services
             _configuration = configuration;
         }
 
-        public Task<List<POAMViewModel>> CreateViewModelFromExcel(string filename)
+        public async Task<List<POAMViewModel>> CreateViewModelFromExcel(string filename)
         {
             // check if the file exists
 
@@ -32,12 +32,12 @@ namespace ActionPlan.Services
             using (ExcelPackage package = new ExcelPackage(file))
             {
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
-                var text = worksheet.Cells[1, 7].Value.ToString();
+                var headings = GetHeadings(worksheet);
+                // fill the view model after validations
+                var poams = GetViewModel(worksheet, headings);
+                // return the view model
+                return poams;
             }
-            // fill the view model after validations
-            // return the view model
-
-            throw new NotImplementedException();
         }
 
         private string GetFullFileName(string filename)
@@ -54,5 +54,82 @@ namespace ActionPlan.Services
 
             throw new FileNotFoundException($"File does not exist at location {filename}");
         }
+
+        //private List<string> GetHeadings(ExcelWorksheet worksheet)
+        //{
+        //    if (worksheet == null) throw new ArgumentNullException();
+        //    var headings = new List<string>();
+
+        //    for (int i = 1; i < worksheet.Dimension.Columns; i++)
+        //    {
+        //        var text = (worksheet.Cells[1, i].Value == null) ? string.Empty : worksheet.Cells[1, i].Value.ToString();
+        //        if (string.IsNullOrEmpty(text))
+        //            break;
+
+        //        headings.Add(text);
+        //    }
+
+        //    return headings;
+        //}
+
+        private Dictionary<string, int> GetHeadings(ExcelWorksheet worksheet)
+        {
+            if (worksheet == null) throw new ArgumentNullException();
+            var headings = new Dictionary<string, int>();
+
+            for (int i = 1; i < worksheet.Dimension.Columns; i++)
+            {
+                var text = (worksheet.Cells[1, i].Value == null) ? string.Empty : worksheet.Cells[1, i].Value.ToString().Trim();
+                if (string.IsNullOrEmpty(text))
+                    break;
+
+                headings.Add(text, i);
+            }
+
+            return headings;
+        }
+
+        private List<POAMViewModel> GetViewModel(ExcelWorksheet worksheet, Dictionary<string, int> headings)
+        {
+            if (worksheet == null) throw new ArgumentNullException();
+            var poams = new List<POAMViewModel>();
+
+            for (int i = 2; i < worksheet.Dimension.Rows; i++)
+            {
+                var viewmodel = new POAMViewModel();
+                viewmodel.Recommendation = (headings.Any(dict => dict.Key.StartsWith("Recommended") 
+                                            && worksheet.Cells[i, headings.Where(keyvalue => keyvalue.Key.StartsWith("Recommended")).Select(item => item.Value).FirstOrDefault()].Value == null) 
+                                                    ? string.Empty 
+                                                    : worksheet.Cells[i, headings.Where(keyvalue => keyvalue.Key.StartsWith("Recommended")).Select(item => item.Value).FirstOrDefault()].Value.ToString());
+                if (string.IsNullOrEmpty(viewmodel.Recommendation))
+                    break;
+
+                viewmodel.ActualFinishDate = DateTime.Now;
+                viewmodel.ActualStartDate = DateTime.Now;
+                viewmodel.AuthSystem = "REGIS";
+                viewmodel.ControlID = "1";
+                viewmodel.CostJustification = "Minimum Operational Cost";
+                viewmodel.CSAMPOAMID = "2";
+                viewmodel.DelayReason = "Other";
+                viewmodel.ID = Guid.NewGuid();
+                viewmodel.Number = 5;
+                viewmodel.OriginalRecommendation = "Lorem Ipsum doler";
+                viewmodel.PlannedFinishDate = DateTime.Now;
+                viewmodel.PlannedStartDate = DateTime.Now;
+                viewmodel.ResourcesRequired = 100.0M;
+                viewmodel.ResponsiblePOCs = "SOC";
+                viewmodel.Risk = "Lorem Ipsum";
+                viewmodel.RiskLevel = "H";
+                viewmodel.ScheduledCompletionDate = DateTime.Now;
+                viewmodel.Status = "Delayed";
+
+                poams.Add(viewmodel);
+            }
+
+            
+
+            return poams;
+        }
+       
     }
 }

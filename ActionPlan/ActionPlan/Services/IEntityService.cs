@@ -1,5 +1,6 @@
 ﻿using ActionPlan.Entities;
 using ActionPlan.Models.PlanOfActionViewModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ActionPlan.Services
@@ -16,6 +17,8 @@ namespace ActionPlan.Services
         /// <returns>POAM object</returns>
         Task<POAM> CreatePOAMFromViewModel(POAMViewModel viewmodel);
 
-        bool IsExcelFileReadable(string filename);
+        Task<bool> IsExcelFileReadable(string filename);
+
+        Task<List<POAM>> ReadPOAMsFromExcel(string filename);
     }
 }
