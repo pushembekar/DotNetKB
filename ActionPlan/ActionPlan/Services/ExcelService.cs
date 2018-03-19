@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
+using System.Globalization;
 
 namespace ActionPlan.Services
 {
@@ -182,7 +183,79 @@ namespace ActionPlan.Services
         {
             if (cell.Value == null) return default(DateTime?);
 
-            return (DateTime.TryParse(cell.Value.ToString(), out DateTime poamDate)) ? poamDate : default(DateTime?);
+            return Int64.TryParse(cell.Value.ToString(), out long exceldate)
+                ? DateTime.FromOADate(exceldate)
+                : default(DateTime?);
+
+            #region May need this code
+            //string fullDate = "01 " + cell.Value.ToString();
+
+            //var lstFullDate = fullDate.Split(' ').Select(p => p.Trim()).ToList();
+            //if (lstFullDate.Count() != 3) return default(DateTime?);
+
+            //switch(lstFullDate[1])
+            //{
+            //    case "Jan":
+            //    case "January":
+            //        lstFullDate[1] = "01";
+            //        break;
+            //    case "Feb":
+            //    case "February":
+            //        lstFullDate[1] = "02";
+            //        break;
+            //    case "Mar":
+            //    case "March":
+            //        lstFullDate[1] = "03";
+            //        break;
+            //    case "Apr":
+            //    case "April":
+            //        lstFullDate[1] = "04";
+            //        break;
+            //    case "May":
+            //        lstFullDate[1] = "05";
+            //        break;
+            //    case "Jun":
+            //    case "June":
+            //        lstFullDate[1] = "06";
+            //        break;
+            //    case "Jul":
+            //    case "July":
+            //        lstFullDate[1] = "07";
+            //        break;
+            //    case "Aug":
+            //    case "August":
+            //        lstFullDate[1] = "08";
+            //        break;
+            //    case "Sep":
+            //    case "Sept":
+            //    case "September":
+            //        lstFullDate[1] = "09";
+            //        break;
+            //    case "Oct":
+            //    case "October":
+            //        lstFullDate[1] = "10";
+            //        break;
+            //    case "Nov":
+            //    case "November":
+            //        lstFullDate[1] = "11";
+            //        break;
+            //    case "Dec":
+            //    case "December":
+            //        lstFullDate[1] = "12";
+            //        break;
+            //    default:
+            //        lstFullDate[1] = string.Empty;
+            //        break;
+            //}
+
+            //fullDate = String.Join(@"/", lstFullDate);
+
+
+            //return (DateTime.TryParseExact(fullDate, "dd/mm/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime poamDate)) ? poamDate : default(DateTime);
+            #endregion
+
+
+            //return (DateTime.TryParse(fullDate, out DateTime poamDate)) ? poamDate : default(DateTime?);
         }
 
 
