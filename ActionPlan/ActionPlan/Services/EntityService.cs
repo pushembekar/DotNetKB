@@ -218,14 +218,14 @@ namespace ActionPlan.Services
                 // Find the object using the primary key
                 var delayreason = await _context.FindAsync<DelayReason>(intID);
                 // if the object cannot be found; throw an exception; otherwise send the object back
-                return delayreason ?? throw new Exception("Delay Reason not found");
+                return delayreason ?? await _context.DelayReasons.Where(item => item.Name == @"Not Applicable").FirstOrDefaultAsync();
             }
             else
             {
                 // Try to see if the object can be found via the "Name" property
                 var strDelayReason = await _context.DelayReasons.Where(item => item.Name == idorname).FirstOrDefaultAsync();
                 // if the object cannot be found; throw an exception; otherwise send the object back
-                return strDelayReason ?? throw new Exception("Delay Reason not found");
+                return strDelayReason ?? await _context.DelayReasons.Where(item => item.Name == @"Not Applicable").FirstOrDefaultAsync();
             }
         }
 
