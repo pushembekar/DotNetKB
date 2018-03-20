@@ -35,10 +35,16 @@ namespace ActionPlan.Services
                 ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
                 var headings = GetHeadings(worksheet);
                 // fill the view model after validations
-                var poams = GetViewModel(worksheet);
+                var poams = GetViewModel(worksheet, GetSystemName(fullname));
                 // return the view model
                 return poams;
             }
+        }
+
+        private string GetSystemName(string filename)
+        {
+            var splitfilename = Path.GetFileName(filename);
+            return splitfilename.Split('-', StringSplitOptions.None)[0];
         }
 
         private string GetFullFileName(string filename)
@@ -90,7 +96,7 @@ namespace ActionPlan.Services
             return headings;
         }
 
-        private List<POAMViewModel> GetViewModel(ExcelWorksheet worksheet)
+        private List<POAMViewModel> GetViewModel(ExcelWorksheet worksheet, string systemname)
         {
             if (worksheet == null) throw new ArgumentNullException();
             var poams = new List<POAMViewModel>();
@@ -106,19 +112,19 @@ namespace ActionPlan.Services
 
                     viewmodel.ActualFinishDate = GetDateFromCell(worksheet.Cells[i, 16]);
                     viewmodel.ActualStartDate = GetDateFromCell(worksheet.Cells[i, 15]);
-                    viewmodel.AuthSystem = "REGIS";
+                    viewmodel.AuthSystem = systemname;
                     viewmodel.ControlID = worksheet.Cells[i, 3].Value == null ? string.Empty : worksheet.Cells[i, 3].Value.ToString();
                     viewmodel.CostJustification = worksheet.Cells[i, 11].Value == null ? string.Empty : worksheet.Cells[i, 11].Value.ToString();
                     viewmodel.CSAMPOAMID = worksheet.Cells[i, 2].Value == null ? string.Empty : worksheet.Cells[i, 2].Value.ToString();
                     viewmodel.DelayReason = GetValueFromCell(worksheet.Cells[i, 6], false);
                     viewmodel.ID = Guid.NewGuid();
                     viewmodel.Number = worksheet.Cells[i, 1].Value == null ? default(int) : Convert.ToInt32(worksheet.Cells[i, 1].Value.ToString());
-                    viewmodel.OriginalRecommendation = worksheet.Cells[i, 7].Value == null ? string.Empty : worksheet.Cells[i, 7].Value.ToString();
+                    viewmodel.OriginalRecommendation = GetOriginalRecommendation(worksheet.Cells[i, 7]);
                     viewmodel.PlannedFinishDate = GetDateFromCell(worksheet.Cells[i, 14]);
                     viewmodel.PlannedStartDate = GetDateFromCell(worksheet.Cells[i, 13]);
-                    viewmodel.ResourcesRequired = 100.0M;
+                    viewmodel.ResourcesRequired = GetCurrencyFromCell(worksheet.Cells[i, 10]);
                     viewmodel.ResponsiblePOCs = worksheet.Cells[i, 9].Value == null ? string.Empty : worksheet.Cells[i, 9].Value.ToString();
-                    viewmodel.Risk = worksheet.Cells[i, 7].Value == null ? string.Empty : worksheet.Cells[i, 7].Value.ToString();
+                    viewmodel.Risk = GetRisk(worksheet.Cells[i, 7]);
                     viewmodel.RiskLevel = worksheet.Cells[i, 4].Value == null ? string.Empty : worksheet.Cells[i, 4].Value.ToString();
                     viewmodel.ScheduledCompletionDate = GetDateFromCell(worksheet.Cells[i, 12]);
                     viewmodel.Status = GetValueFromCell(worksheet.Cells[i, 5], false);
@@ -195,6 +201,31 @@ namespace ActionPlan.Services
             if (cell.Value == null) return string.Empty;
 
             return preserveformat ? cell.Value.ToString().Trim() : cell.Value.ToString().Trim().Replace("\n", string.Empty);
+        }
+
+        private decimal GetCurrencyFromCell(ExcelRangeBase cell)
+        {
+            if (cell.Value == null) return 100.0M;
+
+            return decimal.TryParse(cell.Value.ToString(), out decimal cost) ? cost : 100.0M;
+        }
+
+        private string GetOriginalRecommendation(ExcelRangeBase cell)
+        {
+            if (cell.Value == null) return string.Empty;
+
+            var index = cell.Value.ToString().IndexOf("Risk:");
+
+            return (index > 0) ? cell.Value.ToString().Substring(0, index) : string.Empty;
+        }
+
+        private string GetRisk(ExcelRangeBase cell)
+        {
+            if (cell.Value == null) return string.Empty;
+
+            var index = cell.Value.ToString().IndexOf("Risk:");
+
+            return (index > 0) ? cell.Value.ToString().Substring(index, cell.Value.ToString().Length-index) : string.Empty;
         }
     }
 }
