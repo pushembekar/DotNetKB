@@ -86,7 +86,7 @@ namespace ActionPlan.Services
             try
             {
                 var viewmodels = _excelService.CreateViewModelFromExcel(filename);
-                foreach (var item in await viewmodels)
+                foreach (var item in viewmodels)
                 {
                     var poam = await CreatePOAMFromViewModel(item);
                 }
@@ -105,7 +105,7 @@ namespace ActionPlan.Services
             {
                 var poams = new List<POAM>();
                 var viewmodels = _excelService.CreateViewModelFromExcel(filename);
-                foreach (var item in await viewmodels)
+                foreach (var item in viewmodels)
                 {
                     var poam = await CreatePOAMFromViewModel(item);
                     poams.Add(poam);

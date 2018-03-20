@@ -14,6 +14,6 @@ namespace ActionPlan.Services
         /// </summary>
         /// <param name="filename">Location of the excel file</param>
         /// <returns></returns>
-        Task<List<POAMViewModel>> CreateViewModelFromExcel(string filename);
+        List<POAMViewModel> CreateViewModelFromExcel(string filename);
     }
 }

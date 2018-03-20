@@ -46,6 +46,7 @@ namespace ActionPlan
             services.AddScoped<ILookUpDataService, LookUpDataService>();
             services.AddScoped<IEntityService, EntityService>();
             services.AddScoped<IExcelService, ExcelService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddMvc();
         }

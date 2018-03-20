@@ -2,32 +2,37 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using ActionPlan.Models.PlanOfActionViewModels;
-using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
-using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Hosting;
-using System.Globalization;
 
 namespace ActionPlan.Services
 {
+    /// <summary>
+    /// Class encapsulating all items needed for excel read/write
+    /// </summary>
     public class ExcelService : IExcelService
     {
-        private readonly IHostingEnvironment _environment;
-        private readonly IConfiguration _configuration;
+        // Variable to hold the fileservice
+        private readonly IFileService _fileservice;
 
-        public ExcelService(IHostingEnvironment environment, IConfiguration configuration)
+        /// <summary>
+        /// Contructor for the class
+        /// </summary>
+        /// <param name="fileservice"></param>
+        public ExcelService(IFileService fileservice)
         {
-            _environment = environment;
-            _configuration = configuration;
+            _fileservice = fileservice;
         }
 
-        public async Task<List<POAMViewModel>> CreateViewModelFromExcel(string filename)
+        /// <summary>
+        /// Creates the view model from the excel file provided
+        /// </summary>
+        /// <param name="filename">Name of the file</param>
+        /// <returns>POAMViewModel object</returns>
+        public List<POAMViewModel> CreateViewModelFromExcel(string filename)
         {
             // check if the file exists
-
-            var fullname = GetFullFileName(filename);
+            var fullname = _fileservice.GetFullFileName(filename);
             // read the file
             var file = new FileInfo(fullname);
             using (ExcelPackage package = new ExcelPackage(file))
@@ -41,44 +46,22 @@ namespace ActionPlan.Services
             }
         }
 
+        /// <summary>
+        /// Get the name of the system from the filename
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         private string GetSystemName(string filename)
         {
             var splitfilename = Path.GetFileName(filename);
             return splitfilename.Split('-', StringSplitOptions.None)[0];
         }
 
-        private string GetFullFileName(string filename)
-        {
-            if (File.Exists(filename))
-                return filename;
-
-            var uploadfolder = _configuration.GetValue<string>("UploadFolder");
-
-            var fullname = Path.Combine(_environment.ContentRootPath, uploadfolder, filename);
-
-            if (File.Exists(fullname))
-                return fullname;
-
-            throw new FileNotFoundException($"File does not exist at location {filename}");
-        }
-
-        //private List<string> GetHeadings(ExcelWorksheet worksheet)
-        //{
-        //    if (worksheet == null) throw new ArgumentNullException();
-        //    var headings = new List<string>();
-
-        //    for (int i = 1; i < worksheet.Dimension.Columns; i++)
-        //    {
-        //        var text = (worksheet.Cells[1, i].Value == null) ? string.Empty : worksheet.Cells[1, i].Value.ToString();
-        //        if (string.IsNullOrEmpty(text))
-        //            break;
-
-        //        headings.Add(text);
-        //    }
-
-        //    return headings;
-        //}
-
+        /// <summary>
+        /// Get the headings and the index locations of the excel file
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <returns></returns>
         private Dictionary<string, int> GetHeadings(ExcelWorksheet worksheet)
         {
             if (worksheet == null) throw new ArgumentNullException();
@@ -96,6 +79,12 @@ namespace ActionPlan.Services
             return headings;
         }
 
+        /// <summary>
+        /// Form the view model from the excel worksheet
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="systemname"></param>
+        /// <returns></returns>
         private List<POAMViewModel> GetViewModel(ExcelWorksheet worksheet, string systemname)
         {
             if (worksheet == null) throw new ArgumentNullException();
@@ -105,29 +94,32 @@ namespace ActionPlan.Services
             {
                 try
                 {
-                    var viewmodel = new POAMViewModel();
-                    viewmodel.Recommendation = worksheet.Cells[i, 8].Value == null ? string.Empty : worksheet.Cells[i, 8].Value.ToString();
+                    var viewmodel = new POAMViewModel
+                    {
+                        Recommendation = worksheet.Cells[i, 8].Value == null ? string.Empty : worksheet.Cells[i, 8].Value.ToString()
+                    };
                     if (string.IsNullOrEmpty(viewmodel.Recommendation))
                         break;
 
-                    viewmodel.ActualFinishDate = GetDateFromCell(worksheet.Cells[i, 16]);
-                    viewmodel.ActualStartDate = GetDateFromCell(worksheet.Cells[i, 15]);
-                    viewmodel.AuthSystem = systemname;
-                    viewmodel.ControlID = worksheet.Cells[i, 3].Value == null ? string.Empty : worksheet.Cells[i, 3].Value.ToString();
-                    viewmodel.CostJustification = worksheet.Cells[i, 11].Value == null ? string.Empty : worksheet.Cells[i, 11].Value.ToString();
-                    viewmodel.CSAMPOAMID = worksheet.Cells[i, 2].Value == null ? string.Empty : worksheet.Cells[i, 2].Value.ToString();
-                    viewmodel.DelayReason = GetValueFromCell(worksheet.Cells[i, 6], false);
                     viewmodel.ID = Guid.NewGuid();
+                    viewmodel.AuthSystem = systemname;
                     viewmodel.Number = worksheet.Cells[i, 1].Value == null ? default(int) : Convert.ToInt32(worksheet.Cells[i, 1].Value.ToString());
-                    viewmodel.OriginalRecommendation = GetOriginalRecommendation(worksheet.Cells[i, 7]);
-                    viewmodel.PlannedFinishDate = GetDateFromCell(worksheet.Cells[i, 14]);
-                    viewmodel.PlannedStartDate = GetDateFromCell(worksheet.Cells[i, 13]);
-                    viewmodel.ResourcesRequired = GetCurrencyFromCell(worksheet.Cells[i, 10]);
-                    viewmodel.ResponsiblePOCs = worksheet.Cells[i, 9].Value == null ? string.Empty : worksheet.Cells[i, 9].Value.ToString();
-                    viewmodel.Risk = GetRisk(worksheet.Cells[i, 7]);
+                    viewmodel.CSAMPOAMID = worksheet.Cells[i, 2].Value == null ? string.Empty : worksheet.Cells[i, 2].Value.ToString();
+                    viewmodel.ControlID = worksheet.Cells[i, 3].Value == null ? string.Empty : worksheet.Cells[i, 3].Value.ToString();
                     viewmodel.RiskLevel = worksheet.Cells[i, 4].Value == null ? string.Empty : worksheet.Cells[i, 4].Value.ToString();
-                    viewmodel.ScheduledCompletionDate = GetDateFromCell(worksheet.Cells[i, 12]);
                     viewmodel.Status = GetValueFromCell(worksheet.Cells[i, 5], false);
+                    viewmodel.DelayReason = GetValueFromCell(worksheet.Cells[i, 6], false);
+                    viewmodel.OriginalRecommendation = GetOriginalRecommendation(worksheet.Cells[i, 7]);
+                    viewmodel.Risk = GetRisk(worksheet.Cells[i, 7]);
+
+                    viewmodel.ResponsiblePOCs = worksheet.Cells[i, 9].Value == null ? string.Empty : worksheet.Cells[i, 9].Value.ToString();
+                    viewmodel.ResourcesRequired = GetCurrencyFromCell(worksheet.Cells[i, 10]);
+                    viewmodel.CostJustification = worksheet.Cells[i, 11].Value == null ? string.Empty : worksheet.Cells[i, 11].Value.ToString();
+                    viewmodel.ScheduledCompletionDate = GetDateFromCell(worksheet.Cells[i, 12]);
+                    viewmodel.PlannedStartDate = GetDateFromCell(worksheet.Cells[i, 13]);
+                    viewmodel.PlannedFinishDate = GetDateFromCell(worksheet.Cells[i, 14]);
+                    viewmodel.ActualStartDate = GetDateFromCell(worksheet.Cells[i, 15]);
+                    viewmodel.ActualFinishDate = GetDateFromCell(worksheet.Cells[i, 16]);
 
                     poams.Add(viewmodel);
                 }
@@ -137,12 +129,15 @@ namespace ActionPlan.Services
                     throw ex;
                 }
             }
-
-
-
             return poams;
         }
 
+        /// <summary>
+        /// Form the view model from the excel worksheet
+        /// </summary>
+        /// <param name="worksheet"></param>
+        /// <param name="headings"></param>
+        /// <returns></returns>
         private List<POAMViewModel> GetViewModel(ExcelWorksheet worksheet, Dictionary<string, int> headings)
         {
             if (worksheet == null) throw new ArgumentNullException();
@@ -185,6 +180,11 @@ namespace ActionPlan.Services
             return poams;
         }
 
+        /// <summary>
+        /// Get the date value from the excel cell provided
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
         private DateTime? GetDateFromCell(ExcelRangeBase cell)
         {
             if (cell.Value == null) return default(DateTime?);
@@ -195,7 +195,12 @@ namespace ActionPlan.Services
 
         }
 
-
+        /// <summary>
+        /// Get the string value for the Excel cell
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="preserveformat"></param>
+        /// <returns></returns>
         private string GetValueFromCell(ExcelRangeBase cell, bool preserveformat)
         {
             if (cell.Value == null) return string.Empty;
@@ -203,13 +208,24 @@ namespace ActionPlan.Services
             return preserveformat ? cell.Value.ToString().Trim() : cell.Value.ToString().Trim().Replace("\n", string.Empty);
         }
 
-        private decimal GetCurrencyFromCell(ExcelRangeBase cell)
+        /// <summary>
+        /// Get the currency value from the excel cell provided
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
+        private decimal GetCurrencyFromCell(ExcelRangeBase cell, decimal defaultValue = 100.0M)
         {
-            if (cell.Value == null) return 100.0M;
+            if (cell.Value == null) return defaultValue;
 
-            return decimal.TryParse(cell.Value.ToString(), out decimal cost) ? cost : 100.0M;
+            return decimal.TryParse(cell.Value.ToString(), out decimal cost) ? cost : defaultValue;
         }
 
+        /// <summary>
+        /// Get the Original recommendation of the POAM
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
         private string GetOriginalRecommendation(ExcelRangeBase cell)
         {
             if (cell.Value == null) return string.Empty;
@@ -219,6 +235,11 @@ namespace ActionPlan.Services
             return (index > 0) ? cell.Value.ToString().Substring(0, index) : string.Empty;
         }
 
+        /// <summary>
+        /// Get the 'Risk' of the poam
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
         private string GetRisk(ExcelRangeBase cell)
         {
             if (cell.Value == null) return string.Empty;
