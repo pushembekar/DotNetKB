@@ -50,14 +50,6 @@ namespace ActionPlan.Controllers
         /// <returns>List of POAMViewModels representing the POAMs in the system</returns>
         public async Task<IActionResult> Index()
         {
-            // take this line out after testing
-            //_entityservice.IsExcelFileReadable(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
-            var poams = _entityservice.ReadPOAMsFromExcel(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
-            foreach (var item in await poams)
-            {
-                _context.POAMs.Add(item);
-                await _context.SaveChangesAsync();
-            }
             // read the configuration values... provide default value in case there's an exception
             int @short = _configuration.GetValue<int>("Exerpts:Short", 20);
             int @medium = _configuration.GetValue<int>("Exerpts:Medium", 50);
@@ -71,7 +63,7 @@ namespace ActionPlan.Controllers
             {
                 item.ControlID = TruncateLongField(item.ControlID, @short, out bool controlflag);
                 item.IsControlIDTruncated = controlflag;
-                item.Risk = TruncateLongField(item.Risk, @medium, out bool riskflag);
+                item.Risk = TruncateLongField(item.Risk, @short, out bool riskflag);
                 item.IsRiskTruncated = riskflag;
                 item.OriginalRecommendation = TruncateLongField(item.OriginalRecommendation, @short, out bool origrecoflag);
                 item.IsOriginalRecommendationTruncated = origrecoflag;
