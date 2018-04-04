@@ -17,10 +17,11 @@
                 <span class="input-group-btn">
                     <button class="btn btn-default btn-choose" type="button">Choose</button>
                 </span>
+                <input type="file" name="fileupload" id="fileupload" class="input-ghost" style="visibility:hidden; height:0px;" />
                 <input type="text" class="form-control" placeholder='Choose a file...' />
                 <span class="input-group-btn">
-                    @*<button class="btn btn-success" type="submit">Import</button>*@
-                    <a asp-controller="Excel" asp-action="Import" class="btn btn-success">Import</a>
+                    <button class="btn btn-success" type="submit" asp-controller="Excel" asp-action="Import">Import</button>
+                    @*<a asp-controller="Excel" asp-action="Import" class="btn btn-success">Import</a>*@
                 </span>
                 <span class="input-group-btn">
                     <button class="btn btn-warning btn-reset" type="button">Reset</button>

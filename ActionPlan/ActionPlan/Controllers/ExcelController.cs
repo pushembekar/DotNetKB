@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ActionPlan.Data;
 using ActionPlan.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ActionPlan.Controllers
@@ -30,7 +31,8 @@ namespace ActionPlan.Controllers
         /// The excel import method
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Import()
+        [HttpPost]
+        public async Task<IActionResult> Import(IFormFile fileupload)
         {
             // get the poam list from the uploaded worksheet
             var poams = _entityservice.ReadPOAMsFromExcel(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
