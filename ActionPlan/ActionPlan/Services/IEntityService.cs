@@ -1,5 +1,6 @@
 ﻿using ActionPlan.Entities;
 using ActionPlan.Models.PlanOfActionViewModels;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,5 +21,7 @@ namespace ActionPlan.Services
         Task<bool> IsExcelFileReadable(string filename);
 
         Task<List<POAM>> ReadPOAMsFromExcel(string filename);
+
+        Task<List<POAM>> ReadPOAMsFromExcel(IFormFile file);
     }
 }

@@ -30,12 +30,13 @@ namespace ActionPlan.Controllers
         /// <summary>
         /// The excel import method
         /// </summary>
+        /// <param name="fileupload">File being uploaded</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Import(IFormFile fileupload)
         {
             // get the poam list from the uploaded worksheet
-            var poams = _entityservice.ReadPOAMsFromExcel(@"REGIS-POAM-Spreadsheet-FY17.xlsx");
+            var poams = _entityservice.ReadPOAMsFromExcel(fileupload);
             // add the poam list to persistent storage
             foreach (var item in await poams)
             {

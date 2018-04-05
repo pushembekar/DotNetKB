@@ -1,6 +1,6 @@
 ﻿using ActionPlan.Models.PlanOfActionViewModels;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ActionPlan.Services
 {
@@ -15,5 +15,12 @@ namespace ActionPlan.Services
         /// <param name="filename">Location of the excel file</param>
         /// <returns></returns>
         List<POAMViewModel> CreateViewModelFromExcel(string filename);
+
+        /// <summary>
+        /// Creates the view model from the excel
+        /// </summary>
+        /// <param name="file">File being uploaded</param>
+        /// <returns></returns>
+        List<POAMViewModel> CreateViewModelFromExcel(IFormFile file);
     }
 }

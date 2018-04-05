@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ActionPlan.Models.PlanOfActionViewModels;
+using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
 
 namespace ActionPlan.Services
@@ -31,18 +32,60 @@ namespace ActionPlan.Services
         /// <returns>POAMViewModel object</returns>
         public List<POAMViewModel> CreateViewModelFromExcel(string filename)
         {
-            // check if the file exists
-            var fullname = _fileservice.GetFullFileName(filename);
-            // read the file
-            var file = new FileInfo(fullname);
-            using (ExcelPackage package = new ExcelPackage(file))
+            // ensure that the file extension is correct
+            if (_fileservice.EnsureCorrectFileFormat(filename, ".xlsx"))
             {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
-                var headings = GetHeadings(worksheet);
-                // fill the view model after validations
-                var poams = GetViewModel(worksheet, GetSystemName(fullname));
-                // return the view model
-                return poams;
+                // check if the file exists
+                var fullname = _fileservice.GetFullFileName(filename);
+                // read the file
+                var file = new FileInfo(fullname);
+                using (ExcelPackage package = new ExcelPackage(file))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                    var headings = GetHeadings(worksheet);
+                    // fill the view model after validations
+                    var poams = GetViewModel(worksheet, GetSystemName(fullname));
+                    // return the view model
+                    return poams; 
+                }
+            }
+            else
+            {
+                throw new Exception("Incorrect file format");
+            }
+        }
+
+        /// <summary>
+        /// Creates the view model from the excel file provided
+        /// </summary>
+        /// <param name="filename">Name of the file</param>
+        /// <returns>POAMViewModel object</returns>
+        public List<POAMViewModel> CreateViewModelFromExcel(IFormFile file)
+        {
+            // get the name of the file
+            string filename = file.FileName;
+            // ensure that the file extension is correct
+            if (_fileservice.EnsureCorrectFileFormat(filename, ".xlsx"))
+            {
+                // upload the file
+                var uploadfile = _fileservice.UploadFile(file).Result; // TODO: remove the Result method by making the entire method as async.
+                // check if the file exists
+                var fullname = _fileservice.GetFullFileName(uploadfile);
+                // read the file
+                var uploadedfile = new FileInfo(fullname);
+                using (ExcelPackage package = new ExcelPackage(uploadedfile))
+                {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[1];
+                    var headings = GetHeadings(worksheet);
+                    // fill the view model after validations
+                    var poams = GetViewModel(worksheet, GetSystemName(fullname));
+                    // return the view model
+                    return poams;
+                }
+            }
+            else
+            {
+                throw new Exception("Incorrect file format");
             }
         }
 

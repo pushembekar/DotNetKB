@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -40,11 +42,8 @@ namespace ActionPlan.Services
             if (File.Exists(filename))
                 return filename;
 
-            // Get the config value for the upload file location
-            var uploadfolder = _configuration.GetValue<string>("UploadFolder");
-
             // form the full file path + name for the file
-            var fullname = Path.Combine(_environment.ContentRootPath, uploadfolder, filename);
+            var fullname = GetUploadLocation(filename);
 
             // return the full path
             if (File.Exists(fullname))
@@ -52,6 +51,48 @@ namespace ActionPlan.Services
 
             // if we cannot find the file, throw back a file not found exception
             throw new FileNotFoundException($"File does not exist at location {filename}");
+        }
+
+        public bool EnsureCorrectFileFormat(string filename, string format)
+        {
+            return Path.GetExtension(filename) == format;
+        }
+
+        public string GetUploadLocation(string filename)
+        {
+            // Get the config value for the upload file location
+            var uploadfolder = _configuration.GetValue<string>("UploadFolder");
+
+            // form the full file path + name for the file
+            var fullname = Path.Combine(_environment.ContentRootPath, uploadfolder, filename);
+
+            // return full path
+            return fullname;
+        }
+
+        public async Task<string> UploadFile(IFormFile file)
+        {
+            var filepath = GetUploadLocation(file.FileName);
+
+            if(file.Length > 0)
+            {
+                using (var stream = new FileStream(filepath, FileMode.Create))
+                {
+                    try
+                    {
+                        await file.CopyToAsync(stream);
+                        return filepath;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Unable to upload file", ex);
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Zero length file found");
+            }
         }
     }
 }

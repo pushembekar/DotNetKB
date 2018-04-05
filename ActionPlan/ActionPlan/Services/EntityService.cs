@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ActionPlan.Data;
 using ActionPlan.Entities;
 using ActionPlan.Models.PlanOfActionViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace ActionPlan.Services
@@ -105,6 +106,26 @@ namespace ActionPlan.Services
             {
                 var poams = new List<POAM>();
                 var viewmodels = _excelService.CreateViewModelFromExcel(filename);
+                foreach (var item in viewmodels)
+                {
+                    var poam = await CreatePOAMFromViewModel(item);
+                    poams.Add(poam);
+                }
+                return poams;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async Task<List<POAM>> ReadPOAMsFromExcel(IFormFile file)
+        {
+            try
+            {
+                var poams = new List<POAM>();
+                var viewmodels = _excelService.CreateViewModelFromExcel(file);
                 foreach (var item in viewmodels)
                 {
                     var poam = await CreatePOAMFromViewModel(item);

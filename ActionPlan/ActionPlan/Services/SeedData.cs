@@ -27,6 +27,7 @@ namespace ActionPlan.Services
                 {
                     authSystems.Add(new AuthSystem { Name = @"REGIS" });
                     authSystems.Add(new AuthSystem { Name = @"REDMACS" });
+                    authSystems.Add(new AuthSystem { Name = @"Terremark" });
                     context.AuthSystems.AddRange(authSystems);
                     context.SaveChanges();
                 }
