@@ -17,8 +17,7 @@ namespace ActionPlan.Services
         {
             var env = services.GetRequiredService<IHostingEnvironment>();
 
-            if (env.IsProduction())
-                return;
+            
 
             using (var context = new POAMDbContext(services.GetRequiredService<DbContextOptions<POAMDbContext>>()))
             {
@@ -84,7 +83,12 @@ namespace ActionPlan.Services
                     responsiblepocs.Add(new ResponsiblePOC { ID = new Guid(), Name = "Lai Lee-Birman", Description = "System Owner" });
                     responsiblepocs.Add(new ResponsiblePOC { ID = new Guid(), Name = "SOC", Description = "Security Office" });
                     responsiblepocs.Add(new ResponsiblePOC { ID = new Guid(), Name = "Jeremy Holmes", Description = "Information Steward" });
+                    context.ResponsiblePOCs.AddRange(responsiblepocs);
+                    context.SaveChanges();
                 }
+
+                if (env.IsProduction())
+                    return;
 
                 if (!context.POAMs.Any())
                 {
