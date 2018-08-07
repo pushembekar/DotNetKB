@@ -32,10 +32,11 @@ namespace LeetCode
             //var result = Utopia.utopianTree(59);
             //var result = Professor.angryProfessor(2, new[] { 0, -1, 2, 1 });
             //var result = BeautifulDays.beautifulDays(20, 23, 6);
-            var result = Advertizing.viralAdvertising(60);
+            //var result = Advertizing.viralAdvertising(60);
+            var result = SavePrisoner.saveThePrisoner(5, 2, 2);
 
             Console.WriteLine(result);
-            Console.WriteLine(int.MaxValue);
+            //Console.WriteLine(int.MaxValue);
             Console.ReadKey();
         }
 
