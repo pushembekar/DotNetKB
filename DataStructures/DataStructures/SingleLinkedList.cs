@@ -74,5 +74,45 @@ namespace DataStructures
 
             Console.WriteLine($"Count of elements: {count}");
         }
+
+        /// <summary>
+        /// Find the reference to the last node of the list
+        /// </summary>
+        /// <returns></returns>
+        public void FindLastNode()
+        {
+            var p = Start;
+
+            while (p.Link != null)
+                p = p.Link;
+
+            Console.WriteLine($"Last element is {p.Info}");
+        }
+
+        public void FindSecondLastNode()
+        {
+            var p = Start;
+
+            while (p.Link.Link != null)
+                p = p.Link;
+
+            Console.WriteLine($"Second Last element is {p.Info}");
+        }
+
+        public void FindElementWithValue(int x)
+        {
+            var p = Start;
+
+            while (p != null)
+            {
+                if (p.Info == x)
+                    break;
+                p = p.Link;
+            }
+
+            var y = (p == null) ? "Not Found" : "Found";
+
+            Console.WriteLine($"Element was {y} in the list");
+        }
     }
 }
