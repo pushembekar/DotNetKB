@@ -36,7 +36,8 @@ namespace LeetCode
             //var result = SavePrisoner.saveThePrisoner(5, 2, 2);
             //var result = ArrayRotation.circularArrayRotation(new int[] { 1, 2, 3, 4 }, 2, new int[] { 0, 1, 2,3 });
             //var result = Equation.permutationEquation(new int[] { 2, 4, 3, 5, 1 });
-            var result = FindDigits.findDigits(23450902);
+            //var result = FindDigits.findDigits(23450902);
+            var result = Parity.alternatingParityPermutations(5);
 
             Console.WriteLine(result);
             //Console.WriteLine(int.MaxValue);
