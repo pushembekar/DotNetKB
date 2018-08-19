@@ -31,6 +31,15 @@ namespace DataStructures
             p.Link = temp;
         }
 
+        public void InsertAtBeginning(int n)
+        {
+            Node p;
+            Node temp = new Node(n);
+
+            temp.Link = Start;
+            Start = temp;
+        }
+
         public void CreateList()
         {
             int i, n, data;
@@ -45,7 +54,8 @@ namespace DataStructures
             {
                 Console.Write("Enter the value of the element to be added : ");
                 data = Convert.ToInt32(Console.ReadLine());
-                InsertAtEnd(data);
+                //InsertAtEnd(data);
+                InsertAtBeginning(data);
             }
         }
 
