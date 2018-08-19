@@ -54,8 +54,8 @@ namespace DataStructures
             {
                 Console.Write("Enter the value of the element to be added : ");
                 data = Convert.ToInt32(Console.ReadLine());
-                //InsertAtEnd(data);
-                InsertAtBeginning(data);
+                InsertAtEnd(data);
+                //InsertAtBeginning(data);
             }
         }
 
@@ -123,6 +123,25 @@ namespace DataStructures
             var y = (p == null) ? "Not Found" : "Found";
 
             Console.WriteLine($"Element was {y} in the list");
+        }
+
+        public void Reverse()
+        {
+            Node p, prev, next;
+
+            prev = null;
+            p = Start;
+
+            while(p != null)
+            {
+                next = p.Link;
+                p.Link = prev;
+                prev = p;
+                p = next;
+            }
+
+            Start = prev;
+            PrintList();
         }
     }
 }

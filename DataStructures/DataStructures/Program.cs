@@ -20,6 +20,8 @@ namespace DataStructures
             Console.Write("*********************************" + Environment.NewLine);
             list.FindElementWithValue(50);
             Console.Write("*********************************" + Environment.NewLine);
+            list.Reverse();
+            Console.Write("*********************************" + Environment.NewLine);
             Console.Read();
         }
     }
