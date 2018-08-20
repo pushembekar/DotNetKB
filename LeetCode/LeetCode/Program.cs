@@ -38,8 +38,9 @@ namespace LeetCode
             //var result = Equation.permutationEquation(new int[] { 2, 4, 3, 5, 1 });
             //var result = FindDigits.findDigits(23450902);
             //var result = Parity.alternatingParityPermutations(5);
-            Factorial.extraLongFactorials(20);
-            //Console.WriteLine(result);
+            //Factorial.extraLongFactorials(20);
+            var result = Clouds.jumpingOnClouds(new[] { 0, 0, 1, 0, 0, 1, 1, 0 }, 2);
+            Console.WriteLine(result);
             //Console.WriteLine(int.MaxValue);
             Console.ReadKey();
         }
