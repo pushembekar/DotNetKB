@@ -22,6 +22,8 @@ namespace DataStructures
             Console.Write("*********************************" + Environment.NewLine);
             list.Reverse();
             Console.Write("*********************************" + Environment.NewLine);
+            list.BubbleSort();
+            Console.Write("*********************************" + Environment.NewLine);
             Console.Read();
         }
     }

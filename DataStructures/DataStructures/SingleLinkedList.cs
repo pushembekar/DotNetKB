@@ -143,5 +143,26 @@ namespace DataStructures
             Start = prev;
             PrintList();
         }
+
+        public void BubbleSort()
+        {
+            Node p, q, end;
+
+            for(end = null; end != Start.Link; end = p)
+            {
+                for(p = Start; p.Link != end; p = p.Link)
+                {
+                    q = p.Link;
+                    if (p.Info > q.Info)
+                    {
+                        int temp = p.Info;
+                        p.Info = q.Info;
+                        q.Info = temp;
+                    }
+                }
+            }
+
+            PrintList();
+        }
     }
 }
