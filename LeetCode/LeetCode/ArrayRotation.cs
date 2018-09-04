@@ -10,19 +10,22 @@ namespace LeetCode
         public static int[] circularArrayRotation(int[] a, int k, int[] queries)
         {
             int n = a.Length;
-            int actual = k % n;
+            k = k % n;
             int[] b = new int[n];
 
-            for(int i = 0; i < queries.Length; i++)
+            for(int i=0; i<n; i++)
             {
-                if (queries[i] - actual >= 0)
-                    b[i] = a[queries[i] - actual];
+                if (i + k < n)
+                    b[i + k] = a[i];
                 else
-                    b[i] = a[queries[i] - actual + n];
-
+                    b[i - (n - k)] = a[i];
+            }
+            for(int i=0; i < queries.Length; i++)
+            {
+                queries[i] = b[queries[i]];
             }
 
-            return b;
+            return queries;
         }
     }
 }
