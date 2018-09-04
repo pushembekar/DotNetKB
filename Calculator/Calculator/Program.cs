@@ -9,6 +9,7 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello Pushkar!");
             Console.WriteLine("Hello World!");
             Console.ReadKey();
         }
