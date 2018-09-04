@@ -13,6 +13,7 @@ using ActionPlan.Models;
 using ActionPlan.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace ActionPlan
 {
@@ -32,6 +33,12 @@ namespace ActionPlan
             // Commenting the code to use InMemoryDatabase for development
             //services.AddDbContext<ApplicationDbContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddLogging(builder =>
+            {
+                builder.AddConfiguration(Configuration.GetSection("Logging"))
+                    .AddConsole()
+                    .AddDebug();
+            });
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseInMemoryDatabase("ThisConnection"));
             services.AddDbContext<POAMDbContext>(options => options.UseInMemoryDatabase("ThisConnection"));
