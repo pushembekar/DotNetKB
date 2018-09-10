@@ -26,6 +26,9 @@ namespace Calculator
                     case 2:
                         Subtract();
                         break;
+                    case 3:
+                        Multiply();
+                        break;
                     case 99:
                         Environment.Exit(0);
                         break;
@@ -55,6 +58,17 @@ namespace Calculator
             int b = Convert.ToInt32(Console.ReadLine());
             // add the numbers
             int c = a - b;
+            Console.WriteLine("Result is " + c.ToString() + "\n");
+        }
+
+        private static void Multiply()
+        {
+            Console.WriteLine("Enter first number:");
+            int a = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter second number:");
+            int b = Convert.ToInt32(Console.ReadLine());
+            // add the numbers
+            int c = a * b;
             Console.WriteLine("Result is " + c.ToString() + "\n");
         }
     }
