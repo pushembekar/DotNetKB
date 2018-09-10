@@ -29,6 +29,9 @@ namespace Calculator
                     case 3:
                         Multiply();
                         break;
+                    case 4:
+                        Divide();
+                        break;
                     case 99:
                         Environment.Exit(0);
                         break;
@@ -38,6 +41,7 @@ namespace Calculator
                 }
             }
         }
+        
 
         private static void Add()
         {
@@ -70,6 +74,11 @@ namespace Calculator
             // add the numbers
             int c = a * b;
             Console.WriteLine("Result is " + c.ToString() + "\n");
+        }
+
+        private static void Divide()
+        {
+            throw new NotImplementedException();
         }
     }
 }
