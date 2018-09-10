@@ -49,7 +49,13 @@ namespace Calculator
 
         private static void Subtract()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter first number:");
+            int a = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter second number:");
+            int b = Convert.ToInt32(Console.ReadLine());
+            // add the numbers
+            int c = a - b;
+            Console.WriteLine("Result is " + c.ToString() + "\n");
         }
     }
 }
