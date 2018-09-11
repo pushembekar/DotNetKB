@@ -78,7 +78,8 @@ namespace Calculator
 
         private static void Divide()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Enter first number:");
+            int a = Convert.ToInt32(Console.ReadLine());
         }
     }
 }
