@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace LeetCode
 {
@@ -39,8 +40,14 @@ namespace LeetCode
             //var result = FindDigits.findDigits(23450902);
             //var result = Parity.alternatingParityPermutations(5);
             //Factorial.extraLongFactorials(20);
-            var result = Clouds.jumpingOnClouds(new[] { 0, 0, 1, 0, 0, 1, 1, 0 }, 2);
-            Console.WriteLine(result);
+            var list = new List<int> { 1, 2, 3, 4, 5 };
+            //var items = list.Prepend<int>(2);
+            //var items = SherlockValidString.isValid("abcc");
+            //string[] words = { "This", "is", "an", "example", "of", "text", "justification." };
+            string[] words = { "Science","is","what","we","understand","well","enough","to","explain", "to","a","computer.","Art","is","everything","else","we","do" };
+            var items = TextJustification.FullJustify(words, 20);
+            //var result = Clouds.jumpingOnClouds(new[] { 0, 0, 1, 0, 0, 1, 1, 0 }, 2);
+            //Console.WriteLine(result);
             //Console.WriteLine(int.MaxValue);
             Console.ReadKey();
         }
